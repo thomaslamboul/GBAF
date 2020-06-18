@@ -9,8 +9,8 @@ function connection()
 		$username = htmlspecialchars($_POST['usernameConnection']);
 		$password = htmlspecialchars($_POST['passwordConnection']);
 
-		$login_exist = checkPostsConnection($username, $password);
-		if ($login_exist)
+		$loginExist = checkPostsConnection($username, $password);
+		if ($loginExist)
 		{
 			$_SESSION['username'] = $username;
 			$_SESSION['password'] = $password;
@@ -21,7 +21,7 @@ function connection()
 				setcookie('username', $username, time() + 14*24*3600, null, null, false, true);
 				setcookie('password', $password, time() + 14*24*3600, null, null, false, true);
 			}
-			header('Location: index.php');
+		header('Location: index.php');
 		}
 	}
 	require('view/frontend/connectionView.php');

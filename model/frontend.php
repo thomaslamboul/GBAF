@@ -7,7 +7,7 @@ function dbConnect()
     return $db;
 }
 
-function check_posts_connection($username, $password)
+function checkPostsConnection($username, $password)
 {
 	$db=dbConnect();
 

@@ -5,24 +5,19 @@
     	<section>
             <form method="post" action="index.php">
                 <fieldset>
-                    <legend><strong>Connexion</strong></legend>
+                    <legend><strong>Connexion</strong></legend>                    
+                    <?php if(isset($loginExist) AND !$loginExist){?><p class="error">Nom d'utilisateur ou mot de passe incorrect</p><?php }?>
                     <label for="usernameConnection">Nom d'utilisateur</label>
-                    <div>
                     <input type="text" name="usernameConnection" autofocus required>
-                    </div>
                     <label for="passwordConnection">Mot de passe</label>
-                    <div>
-                        <input type="password" name="passwordConnection" required>
-                    </div>
+                    <input type="password" name="passwordConnection" required>
                     <div>
                         <input type="checkbox" name="autoConnect" value="ok" checked=""><label for="autoConnect">Connexion automatique</label>
                     </div>
-                    <?php if(isset($connexion_failed) AND $connexion_failed){echo 'Pseudo ou mot de passe incorrect';}?>
-                    <div id="sendButton">
-                        <input type="submit">
+                    <div>
+                        <input type="submit" value="Se connecter">
                     </div>
-                    <a href="index.php?action=registration">Pas encore membre ? Incrivez-vous !</a>
-                    <a href="">Mot de passe oublié</a>
+                    <a href="">Mot de passe oublié ?</a>
                 </fieldset>
             </form>
         </section>
