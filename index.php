@@ -18,11 +18,11 @@ try
 	{
 		if(isset($_GET['action']) AND $_GET['action'] == 'comments') 
 		{
-			list_comments();
+			listComments();
 		}
 		else
 		{
-			list_partners();
+			listPartners();
 		}
 	}
 	//Si des cookies existent, on les compare avec la BDD. S'il y a bien une correspondance dans la BDD on effectue la connexion auto

@@ -5,7 +5,7 @@
 }
 body
 {
-	min-height: 700px;
+	min-height: 650px;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
@@ -38,7 +38,8 @@ header
 }
 header nav
 {
-	margin-right: 10px;
+	margin-left: 15px;
+	margin-right: 20px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -101,7 +102,18 @@ legend
 }
 input
 {
-	margin-bottom: 15px;
+	margin-bottom: 30px;
+}
+.blocFormsFormat
+{
+	display: flex;
+	justify-content: space-between;
+}
+.formsFormat
+{
+	width: 48%;
+	display: flex;
+	flex-direction: column;
 }
 .error
 {

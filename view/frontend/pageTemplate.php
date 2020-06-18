@@ -21,6 +21,12 @@
                             <li><a href="index.php?action=logout" title="Se déconnecter">Se déconnecter</a></li>
                         <?php 
                         }
+                        elseif(isset($_GET['action']) AND $_GET['action'] == 'registration')
+                        {
+                        ?>
+                            <li><a href="index.php">Déjà inscrit ? Connectez-vous !</a></li>
+                        <?php
+                        }
                         else
                         {
                         ?>

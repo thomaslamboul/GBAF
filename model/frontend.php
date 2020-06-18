@@ -24,3 +24,38 @@ function checkPostsConnection($username, $password)
 	$req->closecursor();
 	return false;
 }
+
+function checkPostsRegistration($username)
+{
+	$db=dbConnect();
+
+	//On compare chaque username de la BDD avec le username envoyé pour voir s'il existe déjà 
+	$req = $db -> query('SELECT username FROM members');
+	while ($data = $req->fetch()) 
+	{
+		if ($username == $data['username']) 
+		{
+			$req->closecursor();
+			return false;
+			break;
+		}
+	}
+	$req->closecursor();
+
+	return true;
+}
+
+function addMember($lastname, $firstname, $username, $password, $question, $answer)
+{
+	$db=dbConnect();
+
+	$req=$db->prepare('INSERT INTO members(last_name, first_name, username, password, question, answer, registration_date) VALUES(:last_name, :first_name, :username, :password, :question, :answer, CURDATE())');
+		$req->execute(array(
+            	'last_name' => $lastname,
+            	'first_name' => $firstname,
+            	'username' => $username, 
+            	'password' => $password,
+            	'question' => $question,
+            	'answer' => $answer,
+            ));
+}

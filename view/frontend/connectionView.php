@@ -1,5 +1,5 @@
 <?php $css = 'style.css'; ?>
-<?php $title = 'Page de connexion - GBAF'; ?>
+<?php $title = 'Connexion - GBAF'; ?>
 
 <?php ob_start(); ?>
     	<section>
