@@ -33,6 +33,7 @@ header *
 }
 header
 {
+	/*background: linear-gradient(0.25turn, white, 10%, #040404);*/
 	height: 100px;
 	display: flex;
 	align-items: center;
@@ -123,12 +124,12 @@ input
 	height: 20px;
 	margin-bottom: 5px;
 }
-.infobulle 
+.toolTip 
 { 
   	text-decoration:none; 
   	position:relative; 
 } 
-.infobulle ul 
+.toolTip ul 
 { 
 	list-style-type: disc;
 	display:none; 
@@ -139,14 +140,14 @@ input
 	font-style:italic; 
 	text-align: left;
 } 
-.infobulle img 
+.toolTip img 
 { 
 	height: auto;
 	width: auto;
 	max-height:100%;
 	max-width:100%;
 } 
-.infobulle:hover ul 
+.toolTip:hover ul 
 { 
 	display:block; 
 	position:absolute; 

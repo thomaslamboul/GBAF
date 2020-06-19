@@ -22,7 +22,7 @@
 
                     <div class="blocWithTooltip">
                         <label for="usernameRegistration"><?php if(isset($usernameCheck) AND !$usernameCheck){?><span class="error">Format de nom d'utilisateur incorrect</span><?php }elseif(isset($usernameNotUsed) AND !$usernameNotUsed){?><span class="error">Nom d'utilisateur déjà utilisé</span><?php }else{?>Nom d'utilisateur<?php }?></label>
-                        <a class="infobulle">
+                        <a class="toolTip">
                             <img src="public/images/infobulle_aide_icon.png" alt=" ? " />
                             <ul>
                                 <li>Au moins 3 caractères</li>
@@ -37,7 +37,7 @@
                         <div class="formsFormat">
                             <div class="blocWithTooltip">
                                 <label for="passwordRegistration"><?php if(isset($passwordCheck) AND !$passwordCheck){?><span class="error">Format de mot de passe incorrect</span><?php }else{?>Mot de passe<?php }?></label>
-                                <a class="infobulle">
+                                <a class="toolTip">
                                 <img src="public/images/infobulle_aide_icon.png" alt=" ? " />
                                 <ul>
                                     <li>Au moins 8 caractères</li>
@@ -59,22 +59,24 @@
 
                     <div class="blocWithTooltip">
                         <label for="questionRegistration"><?php if(isset($questionCheck) AND !$questionCheck){?><span class="error">Veuillez saisir une question secrète</span><?php }else{?>Question secrète<?php }?></label>
-                        <a class="infobulle">
+                        <a class="toolTip">
                             <img src="public/images/infobulle_aide_icon.png" alt=" ? " />
                             <ul>
                                 <li>En cas d'oubli de votre mot de passe cette question vous sera posée</li>
                                 <li>Choisissez une question très personnelle dont vous seul connait la réponse</li>
+                                <li>Choisissez une question qui attend une réponse courte avec un seul mot</li>
                             </ul>
                         </a>
                     </div>
                         <input type="text" name="questionRegistration" placeholder="Ex: Quel était mon surnom à l'université ? / Comment s'appellait mon chien lorsque j'avais 15 ans ? / Quel est le prénom de la personne que j'aime le plus ?" value="<?php if(isset($questionCheck) AND $questionCheck){echo "$question";}?>" required>
 
                     <div class="blocWithTooltip">
-                        <label for="answerRegistration"><?php if(isset($answerCheck) AND !$answerCheck){?><span class="error">Veuillez saisir une réponse secrète</span><?php }else{?>Réponse à la question secrète<?php }?></label>
-                        <a class="infobulle">
+                        <label for="answerRegistration"><?php if(isset($answerCheck) AND !$answerCheck){?><span class="error">Veuillez saisir une réponse secrète</span><?php }else{?>Réponse à votre question secrète<?php }?></label>
+                        <a class="toolTip">
                             <img src="public/images/infobulle_aide_icon.png" alt=" ? " />
                             <ul>
                                 <li>En cas d'oubli de votre mot de passe la réponse à votre question vous sera demandée</li>
+                                <li>Choisissez une réponse courte avec un seul mot</li>
                             </ul>
                         </a>
                     </div>

@@ -11,8 +11,11 @@ try
 	}
 	elseif(isset($_GET['action']) AND $_GET['action'] == 'registration')
 	{
-
 		registration();
+	}
+	elseif(isset($_GET['action']) AND $_GET['action'] == 'forgotPsw')
+	{
+		forgotPassword();
 	}
 	elseif (isset($_SESSION['username']) AND isset($_SESSION['password']))
 	{

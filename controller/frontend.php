@@ -47,7 +47,7 @@ function registration()
 		//On vérifie que le username ne soit pas déjà utilisé
 		if($usernameCheck)
 		{
-			$result = checkPostsRegistration($username);
+			$result = checkPostUsername($username);
 			if ($result) 
 			{
 				$usernameNotUsed = true;
@@ -55,13 +55,13 @@ function registration()
 		}
 
 		//On contrôle le mot de passe : au moins 8 caractères, max 20 caractères, au moins 1 caractère spécial, au moins 1 majuscule, au moins un chiffre
-		if (preg_match('#^[&@=+,.;:/!*%?$-_a-z0-9éèçàù]{8,20}$#i', $password) AND preg_match('#[&@=+,.;:/!*%?$-_]+#', $password) AND preg_match('#[A-Z]+#', $password) AND preg_match('#[0-9]+#', $password))
+		if (checkPassword($password))
 		{
 			$passwordCheck = true;
 		}	
 
 		//On compare le mot de passe à confirmer avec le mot de passe
-		if ($passwordConfirmation == $password)
+		if (checkPasswordConfirm($password, $passwordConfirmation))
 		{
 			$passwordConfirmationCheck = true;
 			//Les 2 mots sont identiques, on hash donc le mot de passe
@@ -88,6 +88,30 @@ function registration()
 		}  
 	}
 	require('view/frontend/registrationView.php');
+}
+
+function checkPassword($password)
+{
+	if (preg_match('#^[&@=+,.;:/!*%?$-_a-z0-9éèçàù]{8,20}$#i', $password) AND preg_match('#[&@=+,.;:/!*%?$-_]+#', $password) AND preg_match('#[A-Z]+#', $password) AND preg_match('#[0-9]+#', $password))
+	{
+		return true;
+	}
+	else 
+	{
+		return false;
+	}	
+}
+
+function checkPasswordConfirm($password, $passwordConfirmation)
+{
+	if ($passwordConfirmation == $password)
+	{
+		return true;	
+	}
+	else
+	{
+		return false;
+	}
 }
 
 function connection()
@@ -123,6 +147,56 @@ function logout()
 	setcookie('username', '');
 	setcookie('password', '');
 	header('Location: index.php');
+}
+
+function forgotPassword()
+{
+	$step = 1;
+	if (isset($_POST['usernameForgotPsw']))
+	{	
+		$username = htmlspecialchars($_POST['usernameForgotPsw']);
+
+		$loginNotExist = checkPostUsername($username);
+		if (!$loginNotExist)
+		{
+			$userQuestion = getUserQuestion($username);
+			$step = 2;
+		}
+	}
+	elseif (isset($_POST['answerForgotPsw']) AND isset($_GET['username']))
+	{
+		$answer = htmlspecialchars($_POST['answerForgotPsw']);
+		$username = htmlspecialchars($_GET['username']);
+
+		$answerCheck = checkUserAnswer($answer, $username);
+
+		if ($answerCheck) 
+		{
+			$step = 3;
+		}
+	}
+	elseif (isset($_POST['passwordForgot']) AND isset($_POST['passwordConfirmationForgot']) AND isset($_GET['username'])) 
+	{
+		$passwordForgot = htmlspecialchars($_POST['passwordForgot']);
+		$passwordConfirmationForgot = htmlspecialchars($_POST['passwordConfirmationForgot']);
+		$username = htmlspecialchars($_GET['username']);
+
+		$passwordCheck = false;
+		$passwordConfirmationCheck = false;
+
+		$passwordCheck = checkPassword($passwordForgot);
+		$passwordConfirmationCheck = checkPasswordConfirm($passwordForgot, $passwordConfirmationForgot);
+
+		if ($passwordCheck AND $passwordConfirmationCheck) 
+		{
+			$passwordForgot = password_hash($passwordForgot, PASSWORD_DEFAULT);
+			changeUserPassword($username, $passwordForgot);
+			header('Location: index.php');
+		}
+
+	}
+	require('view/frontend/forgotPasswordView.php');
+
 }
 
 function listPartners()

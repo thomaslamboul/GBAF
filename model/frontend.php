@@ -25,7 +25,7 @@ function checkPostsConnection($username, $password)
 	return false;
 }
 
-function checkPostsRegistration($username)
+function checkPostUsername($username)
 {
 	$db=dbConnect();
 
@@ -57,5 +57,51 @@ function addMember($lastname, $firstname, $username, $password, $question, $answ
             	'password' => $password,
             	'question' => $question,
             	'answer' => $answer,
+            ));
+}
+
+function getUserQuestion($username)
+{
+	$db=dbConnect();
+
+	$req = $db->prepare('SELECT question FROM members WHERE username=?');
+	$req->execute(array($username));
+	$question = $req->fetch();
+	$req->closecursor();
+
+	return $question;
+}
+
+function checkUserAnswer($answer, $username)
+{
+	$db=dbConnect();
+
+	$req = $db->prepare('SELECT answer FROM members WHERE username=?');
+	$req->execute(array($username));
+	$data = $req->fetch();
+	$req->closecursor();
+
+	if ($answer == $data['answer']) 
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+
+
+
+	return $answer;
+}
+
+function changeUserPassword($username, $password)
+{
+	$db=dbConnect();
+
+	$req=$db->prepare('UPDATE members SET password= :newPassword WHERE username= :username');
+		$req->execute(array(
+            	'newPassword' => $password,
+            	'username' => $username
             ));
 }
