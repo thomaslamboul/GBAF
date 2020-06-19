@@ -8,7 +8,7 @@
                     <legend><strong>Connexion</strong></legend>                    
                     <?php if(isset($loginExist) AND !$loginExist){?><p class="error">Nom d'utilisateur ou mot de passe incorrect</p><?php }?>
                     <label for="usernameConnection">Nom d'utilisateur</label>
-                    <input type="text" name="usernameConnection" autofocus required>
+                    <input type="text" name="usernameConnection" value="<?php if(isset($lastnameCheck) AND $lastnameCheck){echo "$lastname";}?>" autofocus required>
                     <label for="passwordConnection">Mot de passe</label>
                     <input type="password" name="passwordConnection" required>
                     <div>

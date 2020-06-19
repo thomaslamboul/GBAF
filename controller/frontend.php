@@ -26,22 +26,22 @@ function registration()
 
 		$usernameNotUsed = false;
 
-		//On vérifie que le nom envoyé contient au moins une lettre et qu'il ne contient pas de chiffre
-		if (preg_match('#^[a-z^0-9]+#i', $lastname))
+		//On vérifie que le nom envoyé contient au moins 1 lettres (maximum 30 lettres)
+		if (preg_match('#^[a-zéèàùç-]{1,30}$#i', $lastname))
 		{
 			$lastnameCheck = true;
 		}
 
-		//On vérifie que le prénom envoyé contient au moins une lettre et qu'il ne contient pas de chiffre
-		if (preg_match('#^[a-z^0-9]+#i', $firstname))
+		//On vérifie que le prénom envoyé contient au moins 2 lettres (maximum 30 lettres)
+		if (preg_match('#^[a-zéèçàù-]{2,30}$#i', $firstname))
 		{
 			$firstnameCheck = true;
 		}
 
-		//On vérifie que le username envoyé contient au moins un caractère
-		if (preg_match('#^[a-z0-9]#i', $username))
+		//On vérifie que le username envoyé contient au moins 3 caractères et jusqu'à 25 caractères max (lettres, chiffres, -, _)
+		if (preg_match('#^[a-z0-9_-éèçàù]{3,25}$#i', $username))
 		{
-			$usernameCheck = true;
+				$usernameCheck = true;
 		}
 
 		//On vérifie que le username ne soit pas déjà utilisé
@@ -54,8 +54,8 @@ function registration()
 			}
 		}
 
-		//On contrôle le mot de passe avec au moins une lettre ou chiffre (à améliorer)
-		if (preg_match('#[a-z0-9]#i', $password))
+		//On contrôle le mot de passe : au moins 8 caractères, max 20 caractères, au moins 1 caractère spécial, au moins 1 majuscule, au moins un chiffre
+		if (preg_match('#^[&@=+,.;:/!*%?$-_a-z0-9éèçàù]{8,20}$#i', $password) AND preg_match('#[&@=+,.;:/!*%?$-_]+#', $password) AND preg_match('#[A-Z]+#', $password) AND preg_match('#[0-9]+#', $password))
 		{
 			$passwordCheck = true;
 		}	
@@ -69,13 +69,13 @@ function registration()
 		}
 
 		//On vérifie que la question contient au moins un caractère
-		if (preg_match('#^[a-z0-9]#i', $question))
+		if (preg_match('#^[a-z0-9éèçàù&@=+,.;:/!*%?$-_]+#i', $question))
 		{
 			$questionCheck = true;
 		}
 
 		//On vérifie que la réponse contient au moins un caractère
-		if (preg_match('#^[a-z0-9]#i', $answer))
+		if (preg_match('#^[a-z0-9éèçàù&@=+,.;:/!*%?$-_]+#i', $answer))
 		{
 			$answerCheck = true;
 		}
