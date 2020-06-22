@@ -6,8 +6,11 @@
             <form method="post" action="index.php?action=registration">
                 <fieldset>
 
-                    <legend><strong>Inscription</strong></legend>                    
-
+                    <legend><strong>Inscription - Étape <?=$step?></strong></legend>                    
+<?php   
+if($step == 1)
+{
+?>
                     <div class="blocFormsFormat">
                         <div class="formsFormat">
                             <label for="lastnameRegistration"><?php if(isset($lastnameCheck) AND !$lastnameCheck){?><span class="error">Format de nom incorrect</span><?php }else{?>Nom<?php }?></label>
@@ -32,31 +35,11 @@
                         </a>
                     </div>
                     <input type="text" name="usernameRegistration" placeholder="Ex: JohnS-58" value="<?php if(isset($usernameCheck) AND $usernameCheck){echo "$username";}?>" required>
-                    
-                    <div class="blocFormsFormat">
-                        <div class="formsFormat">
-                            <div class="blocWithTooltip">
-                                <label for="passwordRegistration"><?php if(isset($passwordCheck) AND !$passwordCheck){?><span class="error">Format de mot de passe incorrect</span><?php }else{?>Mot de passe<?php }?></label>
-                                <a class="toolTip">
-                                <img src="public/images/infobulle_aide_icon.png" alt=" ? " />
-                                <ul>
-                                    <li>Au moins 8 caractères</li>
-                                    <li>Au moins 1 caractère spécial</li>
-                                    <li>Au moins 1 majuscule</li>
-                                    <li>Au moins 1 chiffre</li>
-                                    <li>20 caractères max</li>
-                                </ul>
-                                </a>
-                            </div>
-                            <input type="password" name="passwordRegistration" required>
-                        </div>
-
-                        <div class="formsFormat">
-                            <label for="passwordConfirmationRegistration"><?php if(isset($passwordConfirmationCheck) AND !$passwordConfirmationCheck AND $passwordCheck){?><span class="error">Les mots de passe ne correspondent pas</span><?php }else{?>Confirmation du mot de passe<?php }?></label>
-                            <input type="password" name="passwordConfirmationRegistration" required>
-                        </div>
-                    </div>
-
+<?php
+}
+if($step == 2)
+{
+?>
                     <div class="blocWithTooltip">
                         <label for="questionRegistration"><?php if(isset($questionCheck) AND !$questionCheck){?><span class="error">Veuillez saisir une question secrète</span><?php }else{?>Question secrète<?php }?></label>
                         <a class="toolTip">
@@ -81,9 +64,47 @@
                         </a>
                     </div>
                     <input type="text" name="answerRegistration" placeholder="Ex: Bogosse / Rex / Aïden" value="<?php if(isset($answerCheck) AND $answerCheck){echo "$answer";}?>" required>
+                    <input type="hidden" name="lastname" value="<?=$lastname?>">
+                    <input type="hidden" name="firstname" value="<?=$firstname?>">
+                    <input type="hidden" name="username" value="<?=$username?>">
+<?php
+}
+if($step == 3)
+{
+?>
+                    <div class="blocFormsFormat">
+                        <div class="formsFormat">
+                            <div class="blocWithTooltip">
+                                <label for="passwordRegistration"><?php if(isset($passwordCheck) AND !$passwordCheck){?><span class="error">Format de mot de passe incorrect</span><?php }else{?>Mot de passe<?php }?></label>
+                                <a class="toolTip">
+                                <img src="public/images/infobulle_aide_icon.png" alt=" ? " />
+                                <ul>
+                                    <li>Au moins 8 caractères</li>
+                                    <li>Au moins 1 caractère spécial</li>
+                                    <li>Au moins 1 majuscule</li>
+                                    <li>Au moins 1 chiffre</li>
+                                    <li>20 caractères max</li>
+                                </ul>
+                                </a>
+                            </div>
+                            <input type="password" name="passwordRegistration" required>
+                        </div>
 
+                        <div class="formsFormat">
+                            <label for="passwordConfirmationRegistration"><?php if(isset($passwordConfirmationCheck) AND !$passwordConfirmationCheck AND $passwordCheck){?><span class="error">Les mots de passe ne correspondent pas</span><?php }else{?>Confirmation du mot de passe<?php }?></label>
+                            <input type="password" name="passwordConfirmationRegistration" required>
+                        </div>
+                    </div>
+                    <input type="hidden" name="lastname" value="<?=$lastname?>">
+                    <input type="hidden" name="firstname" value="<?=$firstname?>">
+                    <input type="hidden" name="username" value="<?=$username?>"> 
+                    <input type="hidden" name="question" value="<?=$question?>">
+                    <input type="hidden" name="answer" value="<?=$answer?>">           
+<?php
+}
+?>
                     <div>
-                        <input type="submit" value="S'inscrire">
+                        <input type="submit" value="Valider">
                     </div>
 
                 </fieldset>

@@ -14,7 +14,6 @@ if($step == 1)
                     <input type="text" name="usernameForgotPsw" autofocus required>
 <?php
 }
-
 if($step == 2)
 {
                     if(isset($answerCheck) AND !$answerCheck){?><p class="error">Réponse incorrecte</p><?php }?>

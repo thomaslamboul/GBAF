@@ -1,60 +1,110 @@
 <?php
 
 require('model/frontend.php');
-
+	
+//Inscription en 3 étapes (1-demande nom/prénom/username | 2-demande question/réponse secrètes | 3-demande mdp)
 function registration()
-{
-	if (isset($_POST['lastnameRegistration']) OR isset($_POST['firstnameRegistration']) OR isset($_POST['usernameRegistration']) OR isset($_POST['passwordRegistration']) OR isset($_POST['passwordConfirmationRegistration']) OR isset($_POST['questionRegistration']) OR isset($_POST['$answerRegistration']))
+{	
+	//Initialisation de la variable $step
+	if(!isset($_POST['lastnameRegistration']) AND !isset($_POST['firstnameRegistration']) AND !isset($_POST['usernameRegistration']) AND !isset($_POST['questionRegistration']) AND !isset($_POST['$answerRegistration']) AND !isset($_POST['passwordRegistration']) AND !isset($_POST['passwordConfirmationRegistration']))
 	{
-		//On désactive les éventuelles injections de code HTML
+		$step = 1;
+	}
+	//Traitement des données de l'étape 1 - vérification des saisis nom, prénom et username
+	elseif (isset($_POST['lastnameRegistration']) AND isset($_POST['firstnameRegistration']) AND isset($_POST['usernameRegistration']))
+	{
+		$step = 1;
+
 		$lastname = htmlspecialchars($_POST['lastnameRegistration']);
 		$firstname = htmlspecialchars($_POST['firstnameRegistration']);
 		$username = htmlspecialchars($_POST['usernameRegistration']);
-		$password = htmlspecialchars($_POST['passwordRegistration']);
-		$passwordConfirmation = htmlspecialchars($_POST['passwordConfirmationRegistration']);
-		$question = htmlspecialchars($_POST['questionRegistration']);
-		$answer = htmlspecialchars($_POST['answerRegistration']);
 
-		//On initilise toutes les variables de vérification à "false"
 		$lastnameCheck = false;
 		$firstnameCheck = false;
 		$usernameCheck = false;
-		$passwordCheck = false;
-		$passwordConfirmationCheck = false;
-		$questionCheck = false;
-		$answerCheck = false;
-
 		$usernameNotUsed = false;
 
 		//On vérifie que le nom envoyé contient au moins 1 lettres (maximum 30 lettres)
-		if (preg_match('#^[a-zéèàùç-]{1,30}$#i', $lastname))
+		if (checkLastname($lastname))
 		{
 			$lastnameCheck = true;
 		}
 
 		//On vérifie que le prénom envoyé contient au moins 2 lettres (maximum 30 lettres)
-		if (preg_match('#^[a-zéèçàù-]{2,30}$#i', $firstname))
+		if (checkFirstname($firstname))
 		{
 			$firstnameCheck = true;
 		}
 
 		//On vérifie que le username envoyé contient au moins 3 caractères et jusqu'à 25 caractères max (lettres, chiffres, -, _)
-		if (preg_match('#^[a-z0-9_-éèçàù]{3,25}$#i', $username))
+		if (checkUsername($username)) 
 		{
-				$usernameCheck = true;
+			$usernameCheck = true;
 		}
 
 		//On vérifie que le username ne soit pas déjà utilisé
 		if($usernameCheck)
 		{
-			$result = checkPostUsername($username);
-			if ($result) 
+			if (checkPostUsername($username)) 
 			{
 				$usernameNotUsed = true;
 			}
 		}
 
-		//On contrôle le mot de passe : au moins 8 caractères, max 20 caractères, au moins 1 caractère spécial, au moins 1 majuscule, au moins un chiffre
+		if ($lastnameCheck AND $firstnameCheck AND $usernameCheck AND $usernameNotUsed) 
+		{
+			$step = 2;
+		}
+	}
+	//Traitement des données de l'étape 2 - vérification des saisis question/réponse secrètes
+	elseif (isset($_POST['questionRegistration']) OR isset($_POST['$answerRegistration']))
+	{
+		$step = 2;
+
+		$lastname = htmlspecialchars($_POST['lastname']);
+		$firstname = htmlspecialchars($_POST['firstname']);
+		$username = htmlspecialchars($_POST['username']);
+		$question = htmlspecialchars($_POST['questionRegistration']);
+		$answer = htmlspecialchars($_POST['answerRegistration']);
+
+		$questionCheck = false;
+		$answerCheck = false;
+
+		//On vérifie que la question contient au moins un caractère
+		if (checkQuestionAnswer($question))
+		{
+			$questionCheck = true;
+		}
+
+		//On vérifie que la réponse contient au moins un caractère
+		if (checkQuestionAnswer($answer))
+		{
+			$answerCheck = true;
+		}
+
+		//On ajoute le membre
+		if ($questionCheck AND $answerCheck) 
+		{	
+			$step = 3;
+		}
+	}
+	//Traitement des données de l'étape 3 - vérification des saisis mots de passe
+	elseif (isset($_POST['passwordRegistration']) AND isset($_POST['passwordConfirmationRegistration']))
+	{
+		$step = 3;
+
+		$lastname = htmlspecialchars($_POST['lastname']);
+		$firstname = htmlspecialchars($_POST['firstname']);
+		$username = htmlspecialchars($_POST['username']);
+		$question = htmlspecialchars($_POST['question']);
+		$answer = htmlspecialchars($_POST['answer']);
+		$password = htmlspecialchars($_POST['passwordRegistration']);
+		$passwordConfirmation = htmlspecialchars($_POST['passwordConfirmationRegistration']);
+
+		$passwordCheck = false;
+		$passwordConfirmationCheck = false;
+
+		//Contrôle mot de passe : au moins 8 caractères, max 20 caractères, au moins 1 caractère spécial, au moins 1 majuscule, au moins un chiffre
 		if (checkPassword($password))
 		{
 			$passwordCheck = true;
@@ -68,26 +118,49 @@ function registration()
 			$password = password_hash($password, PASSWORD_DEFAULT);
 		}
 
-		//On vérifie que la question contient au moins un caractère
-		if (preg_match('#^[a-z0-9éèçàù&@=+,.;:/!*%?$-_]+#i', $question))
+		if ($passwordCheck AND $passwordConfirmationCheck) 
 		{
-			$questionCheck = true;
-		}
-
-		//On vérifie que la réponse contient au moins un caractère
-		if (preg_match('#^[a-z0-9éèçàù&@=+,.;:/!*%?$-_]+#i', $answer))
-		{
-			$answerCheck = true;
-		}
-
-		//Si tout est bon on ajoute le membre
-		if ($lastnameCheck AND $firstnameCheck AND $usernameCheck AND $passwordCheck AND $passwordConfirmationCheck AND $questionCheck AND $answerCheck AND $usernameNotUsed)
-		{	
 			addMember($lastname, $firstname, $username, $password, $question, $answer);
-			header('Location: index.php');
-		}  
-	}
+			header('Location: index.php'); 
+		}
+	}		
 	require('view/frontend/registrationView.php');
+}
+
+function checkLastname($lastname)
+{
+	if (preg_match('#^[a-zéèàùç-]{1,30}$#i', $lastname))
+	{
+		return true;
+	}
+	else 
+	{
+		return false;
+	}	
+}
+
+function checkFirstname($firstname)
+{
+	if(preg_match('#^[a-zéèçàù-]{2,30}$#i', $firstname))
+	{
+		return true;
+	}
+	else 
+	{
+		return false;
+	}
+}
+
+function checkUsername($username)
+{
+	if (preg_match('#^[a-z0-9_-éèçàù]{3,25}$#i', $username))
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }
 
 function checkPassword($password)
@@ -105,6 +178,18 @@ function checkPassword($password)
 function checkPasswordConfirm($password, $passwordConfirmation)
 {
 	if ($passwordConfirmation == $password)
+	{
+		return true;	
+	}
+	else
+	{
+		return false;
+	}
+}
+
+function checkQuestionAnswer($string)
+{
+	if (preg_match('#^[a-z0-9éèçàù@=+,.;:/!*%?$-_]+#i', $string))
 	{
 		return true;	
 	}
@@ -148,7 +233,7 @@ function logout()
 	header('Location: index.php');
 }
 
-//Modification du mot de passe en 3 étapes (1-demande du username 2-réponse à la question secrète 3-nouveau mot de passe)
+//Modification du mot de passe en 3 étapes (1-demande du username | 2-réponse à la question secrète | 3-nouveau mot de passe)
 function forgotPassword()
 {
 	//Initialisation de la variable $step
