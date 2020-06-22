@@ -66,10 +66,10 @@ function getUserQuestion($username)
 
 	$req = $db->prepare('SELECT question FROM members WHERE username=?');
 	$req->execute(array($username));
-	$question = $req->fetch();
+	$data = $req->fetch();
 	$req->closecursor();
 
-	return $question;
+	return $data['question'];
 }
 
 function checkUserAnswer($answer, $username)

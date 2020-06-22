@@ -6,7 +6,7 @@
             <form method="post" action="index.php">
                 <fieldset>
                     <legend><strong>Connexion</strong></legend>                    
-                    <?php if(isset($loginExist) AND !$loginExist){?><p class="error">Nom d'utilisateur ou mot de passe incorrect</p><?php }?>
+                    <?php if(isset($loginExist) AND !$loginExist){?><p class="error">Nom d'utilisateur ou mot de passe incorrect</p><?php }elseif(isset($_GET['changePsw']) AND $_GET['changePsw']){?><p class="correct">La modification du mot de passe a bien été prise en compte</p><?php }?>
                     <label for="usernameConnection">Nom d'utilisateur</label>
                     <input type="text" name="usernameConnection" autofocus required>   
                     <label for="passwordConnection">Mot de passe</label>

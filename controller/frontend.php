@@ -141,7 +141,6 @@ function connection()
 
 function logout()
 {
-	session_start();
 	$_SESSION = array();
 	session_destroy();
 	setcookie('username', '');
@@ -149,54 +148,66 @@ function logout()
 	header('Location: index.php');
 }
 
+//Modification du mot de passe en 3 étapes (1-demande du username 2-réponse à la question secrète 3-nouveau mot de passe)
 function forgotPassword()
 {
-	$step = 1;
-	if (isset($_POST['usernameForgotPsw']))
+	//Initialisation de la variable $step
+	if (!isset($_POST['usernameForgotPsw']) AND !isset($_POST['answerForgotPsw']) AND !isset($_POST['newPsw']) AND !isset($_POST['newPswConfirmation']))
+	{
+		$step = 1;
+	}
+	//Traitement des données de l'étape 1 - vérification du username saisi avec celui la BDD
+	elseif (isset($_POST['usernameForgotPsw']) AND !isset($_POST['answerForgotPsw']) AND !isset($_POST['newPsw']) AND !isset($_POST['newPswConfirmation']))
 	{	
-		$username = htmlspecialchars($_POST['usernameForgotPsw']);
+		$step = 1;
 
-		$loginNotExist = checkPostUsername($username);
+		$usernameForgotPsw = htmlspecialchars($_POST['usernameForgotPsw']);
+
+		$loginNotExist = checkPostUsername($usernameForgotPsw);
 		if (!$loginNotExist)
 		{
-			$userQuestion = getUserQuestion($username);
+			$userQuestion = getUserQuestion($usernameForgotPsw);
 			$step = 2;
 		}
 	}
-	elseif (isset($_POST['answerForgotPsw']) AND isset($_GET['username']))
+	//Traitement des données de l'étape 2 - vérification de la réponse saisie avec celle de la BDD
+	elseif (isset($_POST['answerForgotPsw']) AND isset($_POST['usernameForgotPsw']) AND isset($_POST['userQuestion']) AND !isset($_POST['newPsw']) AND !isset($_POST['newPswConfirmation']))
 	{
-		$answer = htmlspecialchars($_POST['answerForgotPsw']);
-		$username = htmlspecialchars($_GET['username']);
+		$step = 2;
 
-		$answerCheck = checkUserAnswer($answer, $username);
+		$answerForgotPsw = htmlspecialchars($_POST['answerForgotPsw']);
+		$usernameForgotPsw = htmlspecialchars($_POST['usernameForgotPsw']);
+		$userQuestion = htmlspecialchars($_POST['userQuestion']);
+
+		$answerCheck = checkUserAnswer($answerForgotPsw, $usernameForgotPsw);
 
 		if ($answerCheck) 
 		{
 			$step = 3;
 		}
 	}
-	elseif (isset($_POST['passwordForgot']) AND isset($_POST['passwordConfirmationForgot']) AND isset($_GET['username'])) 
+	//Traitement des données de l'étape 3 - vérification des mots de passe saisis puis mise à jour dans la BDD
+	elseif (isset($_POST['newPsw']) AND isset($_POST['newPswConfirmation']) AND isset($_POST['usernameForgotPsw'])) 
 	{
-		$passwordForgot = htmlspecialchars($_POST['passwordForgot']);
-		$passwordConfirmationForgot = htmlspecialchars($_POST['passwordConfirmationForgot']);
-		$username = htmlspecialchars($_GET['username']);
+		$step = 3;
 
-		$passwordCheck = false;
-		$passwordConfirmationCheck = false;
+		$newPassword = htmlspecialchars($_POST['newPsw']);
+		$newPasswordConfirmation = htmlspecialchars($_POST['newPswConfirmation']);
+		$username = htmlspecialchars($_POST['usernameForgotPsw']);
 
-		$passwordCheck = checkPassword($passwordForgot);
-		$passwordConfirmationCheck = checkPasswordConfirm($passwordForgot, $passwordConfirmationForgot);
+		$passwordCheck = checkPassword($newPassword);
+		$passwordConfirmationCheck = checkPasswordConfirm($newPassword, $newPasswordConfirmation);
 
 		if ($passwordCheck AND $passwordConfirmationCheck) 
 		{
-			$passwordForgot = password_hash($passwordForgot, PASSWORD_DEFAULT);
-			changeUserPassword($username, $passwordForgot);
-			header('Location: index.php');
+			$newPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+			changeUserPassword($username, $newPassword);
+			$changePsw = true;
+			header('Location: index.php?changePsw='.$changePsw);
 		}
-
 	}
+	//Affichage
 	require('view/frontend/forgotPasswordView.php');
-
 }
 
 function listPartners()
