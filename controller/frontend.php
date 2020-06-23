@@ -1,7 +1,7 @@
 <?php
 
 require('model/frontend.php');
-	
+
 //Inscription en 3 étapes (1-demande nom/prénom/username | 2-demande question/réponse secrètes | 3-demande mdp)
 function registration()
 {	
@@ -121,7 +121,8 @@ function registration()
 		if ($passwordCheck AND $passwordConfirmationCheck) 
 		{
 			addMember($lastname, $firstname, $username, $password, $question, $answer);
-			header('Location: index.php'); 
+			$registrationStatus = true;
+			header('Location: index.php?registration='.$registrationStatus);
 		}
 	}		
 	require('view/frontend/registrationView.php');
@@ -211,6 +212,9 @@ function connection()
 		{
 			$_SESSION['username'] = $username;
 			$_SESSION['password'] = $password;
+			$data = getUserInfos($_SESSION['username']);
+			$_SESSION['lastname'] = $data['last_name'];
+			$_SESSION['firstname'] = $data['first_name'];
 
 			//On vérifie si la case "connexion auto" optionnelle à été cochée et si oui on crée des cookies pour username et mdp
 			if (isset($_POST['autoConnect']) AND !empty($_POST['autoConnect']))
@@ -251,7 +255,8 @@ function forgotPassword()
 		$loginNotExist = checkPostUsername($usernameForgotPsw);
 		if (!$loginNotExist)
 		{
-			$userQuestion = getUserQuestion($usernameForgotPsw);
+			$data = getUserInfos($usernameForgotPsw);
+			$userQuestion = $data['question'];
 			$step = 2;
 		}
 	}
@@ -286,9 +291,9 @@ function forgotPassword()
 		if ($passwordCheck AND $passwordConfirmationCheck) 
 		{
 			$newPassword = password_hash($newPassword, PASSWORD_DEFAULT);
-			changeUserPassword($username, $newPassword);
-			$changePsw = true;
-			header('Location: index.php?changePsw='.$changePsw);
+			updateUserPassword($username, $newPassword);
+			$updatePswStatus = true;
+			header('Location: index.php?updatePswStatus='.$updatePswStatus);
 		}
 	}
 	//Affichage

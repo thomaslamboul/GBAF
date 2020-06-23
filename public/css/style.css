@@ -1,6 +1,12 @@
+/********************************************************************************************************
+*********************************************************************************************************
+ALL
+*********************************************************************************************************
+********************************************************************************************************/
 *
 {
 	margin: 0;
+	padding: 0;
 	/*border: black solid;*/
 	/*font-family: */
 }
@@ -11,15 +17,29 @@ body
 	flex-direction: column;
 	justify-content: space-between;
 	align-items: stretch;
-	background: linear-gradient(white, 80%, #fc0404);
-	background-repeat: no-repeat;
+	/*background: linear-gradient(white, 80%, #fc0404);
+	background-repeat: no-repeat;*/
 	/*#fc0404 rgba(252,4,4,0.2)
 	#040404 rgb(4,4,4)*/
+	background-color: #F9F9F9;
 }
 ul
 {
 	list-style-type: none;
 	padding: 0;
+}
+a
+{
+	color: #536470;
+	text-decoration: none;
+}
+a:hover
+{
+	color: #fc0404;
+}
+input:focus
+{
+	outline:none;
 }
 /********************************************************************************************************
 *********************************************************************************************************
@@ -33,46 +53,57 @@ header *
 }
 header
 {
-	/*background: linear-gradient(0.25turn, white, 10%, #040404);*/
-	height: 100px;
+	background-color: white;
+	height: 125px;
 	display: flex;
-	align-items: center;
-}
-header nav
-{
-	margin-left: 15px;
-	margin-right: 20px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
+	white-space: nowrap;
 }
 header ul
 {
 	display: flex;
+	/*flex-wrap: wrap;*/
 	justify-content: space-between;
-	align-items: center;
 }
-#logo_GBAF
+#userBlock
+{
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	align-items: flex-end;
+}
+#userBlock li
+{
+	height: 20px;
+	width: auto;
+	margin-right: 10px;
+}
+.logo
 {
 	height: auto;
 	width: auto;
 	max-height:100%;
 	max-width:100%;
 }
-#userBloc
+#logo_profil
 {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: flex-end;
-	text-align: center;
+	margin-right: 5px;
 }
-#userBloc li
+.navButton
 {
-	display:flex;
-	justify-content: flex-end;
-	height: auto;
-	width: auto;	
+	/*font-size: 0.9em;
+	background-color: #fc0404;
+	transition: background-color 0.5s;
+	border:none;
+	border-radius: 10px;
+	color: white;
+	letter-spacing: 0.1em;
+	padding: 5px 10px 5px 10px;*/
+}
+.navButton:hover
+{
+	/*font-weight: bold;
+	background-color: rgb(53,64,70,0.8);
+	cursor:pointer;*/
 }
 /********************************************************************************************************
 *********************************************************************************************************
@@ -83,14 +114,17 @@ section
 {
 	display: flex;
 	flex-direction: column;
-	align-items: stretch;
+	align-items: center;
+}
+form
+{
+	width: 98%;
 }
 fieldset
 {
 	border:none;
 	display: flex;
 	flex-direction: column;
-	align-items: stretch;
 	text-align: center;
 }
 legend
@@ -101,10 +135,40 @@ legend
 	text-align: center;
 	font-size: 1.5em;
 	letter-spacing: 0.3em;
+	/*color: #fc0404;*/
 }
-input
+input[type=text], input[type=password]
 {
+	width: 100%;
+	margin-top: 5px;
 	margin-bottom: 30px;
+	background-color: white;
+	border: solid #E7E8EB 1px;
+	border-radius: 5px;
+	height: 30px;
+}
+input[type=text]:hover, input[type=password]:hover
+{
+	box-shadow: 1px 1px 5px 4px #E7E8EB;
+	border: none;
+	border-radius: 5px;
+}
+input[type=submit]
+{
+	margin: 10px 0px 30px 0px;
+	background-color: #fc0404;
+	transition: background-color 0.5s;
+	border-radius: 10px;
+	border:none;
+	color: white;
+	letter-spacing: 0.1em;
+	padding: 10px 50px 10px 50px;
+}
+input[type=submit]:hover
+{
+	font-weight: bold;
+	background-color: rgb(53,64,70,0.8);
+	cursor:pointer;
 }
 .blocFormsFormat
 {
@@ -188,7 +252,7 @@ PRESENTATION
 }
 /********************************************************************************************************
 *********************************************************************************************************
-ACTEURS ET PARTENAIRES
+MARKET PLAYERS AND PARTNERS
 *********************************************************************************************************
 ********************************************************************************************************/
 

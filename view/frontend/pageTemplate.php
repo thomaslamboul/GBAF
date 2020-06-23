@@ -10,27 +10,27 @@
         <header>
             <nav>
                 <ul>
-                    <li><a href="index.php" title="GBAF"><img src="public/images/LOGO_GBAF.png" id="logo_GBAF"></a></li>
+                    <li><a href="index.php" title="GBAF"><img src="public/images/LOGO_GBAF.png" class="logo"></a></li>
                     <li>
-                        <ul id="userBloc">
+                        <ul id="userBlock">
                         <?php 
                         if(isset($_SESSION['username']) AND isset($_SESSION['password']))
                         {
                         ?>
-                            <li>Prénom Nom</li>
-                            <li><a href="index.php?action=logout" title="Se déconnecter">Se déconnecter</a></li>
+                            <li><a href="" title="Paramètres de l'utilisateur" id="test"><img src="public/images/logo_profil.png" class="logo" id="logo_profil"><?=$_SESSION['lastname'] .' '. $_SESSION['firstname']?></a></li>
+                            <li><a href="index.php?action=logout" title="Déconnexion" class="navButton">Se déconnecter</a></li>
                         <?php 
                         }
                         elseif(isset($_GET['action']) AND $_GET['action'] == 'registration')
                         {
                         ?>
-                            <li><a href="index.php">Déjà inscrit ? Connectez-vous !</a></li>
+                            <li><a href="index.php" title="Se connecter" class="navButton">Déjà inscrit ? Connectez-vous !</a></li>
                         <?php
                         }
                         else
                         {
                         ?>
-                            <li><a href="index.php?action=registration">Pas encore membre ? Incrivez-vous !</a></li>
+                            <li><a href="index.php?action=registration" title="S'inscrire" class="navButton">Pas encore membre ? Incrivez-vous !</a></li>
                         <?php 
                         }
                         ?>

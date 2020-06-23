@@ -60,16 +60,16 @@ function addMember($lastname, $firstname, $username, $password, $question, $answ
             ));
 }
 
-function getUserQuestion($username)
+function getUserInfos($username)
 {
 	$db=dbConnect();
 
-	$req = $db->prepare('SELECT question FROM members WHERE username=?');
+	$req = $db->prepare('SELECT * FROM members WHERE username=?');
 	$req->execute(array($username));
 	$data = $req->fetch();
 	$req->closecursor();
 
-	return $data['question'];
+	return $data;
 }
 
 function checkUserAnswer($answer, $username)
@@ -95,7 +95,7 @@ function checkUserAnswer($answer, $username)
 	return $answer;
 }
 
-function changeUserPassword($username, $password)
+function updateUserPassword($username, $password)
 {
 	$db=dbConnect();
 
