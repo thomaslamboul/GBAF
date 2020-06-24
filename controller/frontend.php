@@ -104,7 +104,7 @@ function registration()
 		$passwordCheck = false;
 		$passwordConfirmationCheck = false;
 
-		//Contrôle mot de passe : au moins 8 caractères, max 20 caractères, au moins 1 caractère spécial, au moins 1 majuscule, au moins un chiffre
+		//Contrôle mot de passe : au moins 8 caractères, au moins 1 caractère spécial, au moins 1 majuscule, au moins un chiffre
 		if (checkPassword($password))
 		{
 			$passwordCheck = true;
@@ -120,7 +120,7 @@ function registration()
 
 		if ($passwordCheck AND $passwordConfirmationCheck) 
 		{
-			addMember($lastname, $firstname, $username, $password, $question, $answer);
+			addAccount($lastname, $firstname, $username, $password, $question, $answer);
 			$registrationStatus = true;
 			header('Location: index.php?registration='.$registrationStatus);
 		}
@@ -166,7 +166,7 @@ function checkUsername($username)
 
 function checkPassword($password)
 {
-	if (preg_match('#^[&@=+,.;:/!*%?$-_a-z0-9éèçàù]{8,20}$#i', $password) AND preg_match('#[&@=+,.;:/!*%?$-_]+#', $password) AND preg_match('#[A-Z]+#', $password) AND preg_match('#[0-9]+#', $password))
+	if (preg_match('#^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).{8,}$#', $password))
 	{
 		return true;
 	}
@@ -207,7 +207,7 @@ function connection()
 		$username = htmlspecialchars($_POST['usernameConnection']);
 		$password = htmlspecialchars($_POST['passwordConnection']);
 
-		$loginExist = checkPostsConnection($username, $password);
+		$loginExist = checkLogins($username, $password);
 		if ($loginExist)
 		{
 			$_SESSION['username'] = $username;
@@ -221,6 +221,8 @@ function connection()
 			{
 				setcookie('username', $username, time() + 14*24*3600, null, null, false, true);
 				setcookie('password', $password, time() + 14*24*3600, null, null, false, true);
+				setcookie('lastname', $data['last_name'], time() + 14*24*3600, null, null, false, true);
+				setcookie('firstname', $data['first_name'], time() + 14*24*3600, null, null, false, true);
 			}
 		header('Location: index.php');
 		}
@@ -232,8 +234,14 @@ function logout()
 {
 	$_SESSION = array();
 	session_destroy();
-	setcookie('username', '');
-	setcookie('password', '');
+	setcookie('username');
+	unset($_COOKIE['username']);
+	setcookie('password');
+	unset($_COOKIE['password']);
+	setcookie('firstname');
+	unset($_COOKIE['firstname']);
+	setcookie('lastname');
+	unset($_COOKIE['lastname']);
 	header('Location: index.php');
 }
 
@@ -302,6 +310,8 @@ function forgotPassword()
 
 function listPartners()
 {
+
+	$data = getPartners();
 	require('view/frontend/listPartnersView.php');
 }
 

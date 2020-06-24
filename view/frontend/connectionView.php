@@ -2,7 +2,7 @@
 <?php $title = 'Connexion - GBAF'; ?>
 
 <?php ob_start(); ?>
-    	<section>
+    	<section id="section-forms">
             <form method="post" action="index.php">
                 <fieldset>
                     <legend><strong>Connexion</strong></legend>                    
@@ -12,7 +12,7 @@
                     <label for="passwordConnection">Mot de passe</label>
                     <input type="password" name="passwordConnection" required>
                     <div>
-                        <input type="checkbox" name="autoConnect" value="ok" checked=""><label for="autoConnect">Connexion automatique</label>
+                        <input type="checkbox" name="autoConnect" value="ok"><label for="autoConnect">Connexion automatique</label>
                     </div>
                     <div>
                         <input type="submit" value="Se connecter">

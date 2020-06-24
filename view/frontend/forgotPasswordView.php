@@ -2,7 +2,7 @@
 <?php $title = 'Mot de passe oublié - GBAF'; ?>
 
 <?php ob_start(); ?>
-    	<section>
+    	<section id="section-forms">
             <form method="post" action="index.php?action=forgotPsw">
                 <fieldset>
                     <legend><strong>Création d'un nouveau mot de passe - Étape <?=$step?></strong></legend>  
@@ -37,7 +37,6 @@ if($step == 3)
                                     <li>Au moins 1 caractère spécial</li>
                                     <li>Au moins 1 majuscule</li>
                                     <li>Au moins 1 chiffre</li>
-                                    <li>20 caractères max</li>
                                 </ul>
                                 </a>
                             </div>

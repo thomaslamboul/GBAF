@@ -2,7 +2,7 @@
 <?php $title = 'Inscription - GBAF'; ?>
 
 <?php ob_start(); ?>
-    	<section>
+    	<section id="section-forms">
             <form method="post" action="index.php?action=registration">
                 <fieldset>
 
@@ -83,7 +83,6 @@ if($step == 3)
                                     <li>Au moins 1 caractère spécial</li>
                                     <li>Au moins 1 majuscule</li>
                                     <li>Au moins 1 chiffre</li>
-                                    <li>20 caractères max</li>
                                 </ul>
                                 </a>
                             </div>

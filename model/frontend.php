@@ -7,19 +7,35 @@ function dbConnect()
     return $db;
 }
 
-function checkPostsConnection($username, $password)
+function checkLogins($username, $password)
 {
 	$db=dbConnect();
 
-	$req = $db -> query('SELECT username, password FROM members');
-	while ($data = $req->fetch()) 
+	$req = $db -> query('SELECT username, password FROM accounts');
+
+	if(!preg_match('#^\$2y\$10#', $password))
 	{
-	    if ($username == $data['username'] AND password_verify($password, $data['password'])) 
-	    {
-			$req->closecursor();
-			return true;
-			break;	
+		while ($data = $req->fetch()) 
+		{
+			if ($username == $data['username'] AND password_verify($password, $data['password'])) 
+	    	{
+				$req->closecursor();
+				return true;
+				break;	
+	    	}
 	    }
+	}
+	else
+	{
+		while ($data = $req->fetch()) 
+		{
+			if ($username == $data['username'] AND $password == $data['password'])
+	    	{
+				$req->closecursor();
+				return true;
+				break;	
+	    	}
+		}
 	}
 	$req->closecursor();
 	return false;
@@ -30,7 +46,7 @@ function checkPostUsername($username)
 	$db=dbConnect();
 
 	//On compare chaque username de la BDD avec le username envoyé pour voir s'il existe déjà 
-	$req = $db -> query('SELECT username FROM members');
+	$req = $db -> query('SELECT username FROM accounts');
 	while ($data = $req->fetch()) 
 	{
 		if ($username == $data['username']) 
@@ -45,11 +61,11 @@ function checkPostUsername($username)
 	return true;
 }
 
-function addMember($lastname, $firstname, $username, $password, $question, $answer)
+function addAccount($lastname, $firstname, $username, $password, $question, $answer)
 {
 	$db=dbConnect();
 
-	$req=$db->prepare('INSERT INTO members(last_name, first_name, username, password, question, answer, registration_date) VALUES(:last_name, :first_name, :username, :password, :question, :answer, CURDATE())');
+	$req=$db->prepare('INSERT INTO accounts(last_name, first_name, username, password, question, answer, registration_date) VALUES(:last_name, :first_name, :username, :password, :question, :answer, CURDATE())');
 		$req->execute(array(
             	'last_name' => $lastname,
             	'first_name' => $firstname,
@@ -64,7 +80,7 @@ function getUserInfos($username)
 {
 	$db=dbConnect();
 
-	$req = $db->prepare('SELECT * FROM members WHERE username=?');
+	$req = $db->prepare('SELECT last_name, first_name FROM accounts WHERE username=?');
 	$req->execute(array($username));
 	$data = $req->fetch();
 	$req->closecursor();
@@ -76,7 +92,7 @@ function checkUserAnswer($answer, $username)
 {
 	$db=dbConnect();
 
-	$req = $db->prepare('SELECT answer FROM members WHERE username=?');
+	$req = $db->prepare('SELECT answer FROM accounts WHERE username=?');
 	$req->execute(array($username));
 	$data = $req->fetch();
 	$req->closecursor();
@@ -90,8 +106,6 @@ function checkUserAnswer($answer, $username)
 		return false;
 	}
 
-
-
 	return $answer;
 }
 
@@ -99,9 +113,19 @@ function updateUserPassword($username, $password)
 {
 	$db=dbConnect();
 
-	$req=$db->prepare('UPDATE members SET password= :newPassword WHERE username= :username');
+	$req=$db->prepare('UPDATE accounts SET password= :newPassword WHERE username= :username');
 		$req->execute(array(
             	'newPassword' => $password,
             	'username' => $username
             ));
 }
+
+function getPartners()
+{
+	$db=dbConnect();
+
+	$req = $db -> query('SELECT * FROM partners');
+
+	return $req;
+}
+

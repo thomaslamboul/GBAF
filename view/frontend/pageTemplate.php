@@ -2,7 +2,7 @@
 <html lang="fr">         
     <head>   
         <meta charset="utf-8" />
-       <link rel="stylesheet" type="text/css" href="public/css/<?= $css ?>" />
+       <link rel="stylesheet" type="text/css" href="public/css/<?= $css ?>"/>
        <link rel="shortcut icon" type="image/png" href="public/images/favicon.png"/>
         <title><?= $title ?></title>
     </head>
@@ -10,15 +10,15 @@
         <header>
             <nav>
                 <ul>
-                    <li><a href="index.php" title="GBAF"><img src="public/images/LOGO_GBAF.png" class="logo"></a></li>
+                    <li id="logoGBAF-block"><a href="index.php" title="GBAF"><img src="public/images/LOGO_GBAF.png" class="logo"></a></li>
                     <li>
                         <ul id="userBlock">
                         <?php 
                         if(isset($_SESSION['username']) AND isset($_SESSION['password']))
                         {
                         ?>
-                            <li><a href="" title="Paramètres de l'utilisateur" id="test"><img src="public/images/logo_profil.png" class="logo" id="logo_profil"><?=$_SESSION['lastname'] .' '. $_SESSION['firstname']?></a></li>
-                            <li><a href="index.php?action=logout" title="Déconnexion" class="navButton">Se déconnecter</a></li>
+                            <li><a href="index.php?action=logout" title="Déconnexion" class="navButton"><img src="public/images/logo_logout.png" class="logo" id="logo_logout">Se déconnecter</a></li>
+                            <li><a href="" title="Paramètres de l'utilisateur"><img src="public/images/logo_profil.png" class="logo" id="logo_profil"><?=$_SESSION['lastname'] .' '. $_SESSION['firstname']?></a></li>
                         <?php 
                         }
                         elseif(isset($_GET['action']) AND $_GET['action'] == 'registration')
