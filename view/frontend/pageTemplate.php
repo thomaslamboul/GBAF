@@ -7,6 +7,7 @@
         <title><?= $title ?></title>
     </head>
     <body>
+    <div id="background"<?php if(!isset($_SESSION['username'])){?>class="background-image"<?php }?>>
         <header>
             <nav>
                 <ul>
@@ -17,8 +18,8 @@
                         if(isset($_SESSION['username']) AND isset($_SESSION['password']))
                         {
                         ?>
-                            <li><a href="index.php?action=logout" title="Déconnexion" class="navButton"><img src="public/images/logo_logout.png" class="logo" id="logo_logout">Se déconnecter</a></li>
                             <li><a href="" title="Paramètres de l'utilisateur"><img src="public/images/logo_profil.png" class="logo" id="logo_profil"><?=$_SESSION['lastname'] .' '. $_SESSION['firstname']?></a></li>
+                            <li><a href="index.php?action=logout" title="Déconnexion" class="navButton"><img src="public/images/logo_logout.png" class="logo" id="logo_logout">Se déconnecter</a></li>
                         <?php 
                         }
                         elseif(isset($_GET['action']) AND $_GET['action'] == 'registration')
@@ -44,12 +45,13 @@
             <nav>
                 <ul>
                     <li><hr class="verticalSeparator"></li>
-                    <li>Mentions légales</li>
+                    <li><a href="#">Mentions légales</a></li>
                     <li><hr class="verticalSeparator"></li>
-                    <li>Contact</li>
+                    <li><a href="#">Contact</a></li>
                     <li><hr class="verticalSeparator"></li>
                 </ul>
             </nav>
         </footer>
+    </div>
     </body>
 </html>

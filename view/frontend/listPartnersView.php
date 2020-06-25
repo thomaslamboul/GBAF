@@ -5,7 +5,7 @@
     	<section class="sections-partersPage" id="section-presentation">
             <div>
         		<h1>Le Groupement Banque Assurance Français​</h1>
-        		<p>Représentant de la profession bancaire et des assureurs sur tous les axes de la réglementation financière française, nous gérons près de 80 millions de comptes sur le territoire national. Le GBAF représente les 6 grands groupes français : BNP Paribas, BPCE, Crédit Agricole, Crédit Mutuel-CIC, Société Générale et La Banque Postale. Notre mission est de promouvoir l'activité bancaire à l’échelle nationale. Nous sommes également un interlocuteur privilégié des pouvoirs publics. Nous sommes fiers de vous accueillir sur notre extranet mettant à disposition des ressources pour les salariés des différentes banques de notre groupe.</p>
+        		<p>Représentant de la profession bancaire et des assureurs sur tous les axes de la réglementation financière française, nous gérons près de 80 millions de comptes sur le territoire national.<br>Le GBAF représente les 6 grands groupes français : BNP Paribas, BPCE, Crédit Agricole, Crédit Mutuel-CIC, Société Générale et La Banque Postale.<br>Notre mission est de promouvoir l'activité bancaire à l’échelle nationale. Nous sommes également un interlocuteur privilégié des pouvoirs publics. Nous sommes fiers de vous accueillir sur notre extranet mettant à disposition des ressources pour les salariés des différentes banques de notre groupe.</p>
             </div>
             <div id="master"></div>	
     	</section>
@@ -23,12 +23,12 @@ while ($partners = $data->fetch())
                         <p>
                             <img src="data:image/png;base64,<?=htmlspecialchars(base64_encode($partners['logo']))?>" alt="Logo des acteurs et partenaires" title="<?=htmlspecialchars($partners['partner'])?>" class="logo"/>
                         </p>
-                        <div>
+                        <div id="partner-content">
             				<h3><?=htmlspecialchars($partners['partner'])?></h3>
-            				<p><?=nl2br(htmlspecialchars($partners['description']))?></p>
-                            <a href="" title=""><?=htmlspecialchars($partners['partner'])?></a>
+            				<p><?=cutString(nl2br(htmlspecialchars($partners['description'])))?></p>
+                            <a href="#" title="<?=htmlspecialchars($partners['partner'])?>"><?=htmlspecialchars($partners['partner'])?></a>
                         </div>
-        				<a href="index.php?action=comments&amp;parter=<?=htmlspecialchars($partners['partner'])?>" title="Lire la suite...">Lire la suite</a>
+        				<a href="index.php?action=comments&amp;partner=<?=htmlspecialchars($partners['id_partner'])?>" title="Lire la suite...">Lire la suite</a>
         			</div>
 <?php
 }

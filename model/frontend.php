@@ -80,7 +80,7 @@ function getUserInfos($username)
 {
 	$db=dbConnect();
 
-	$req = $db->prepare('SELECT last_name, first_name FROM accounts WHERE username=?');
+	$req = $db->prepare('SELECT * FROM accounts WHERE username=?');
 	$req->execute(array($username));
 	$data = $req->fetch();
 	$req->closecursor();
@@ -127,5 +127,28 @@ function getPartners()
 	$req = $db -> query('SELECT * FROM partners');
 
 	return $req;
+}
+
+function getPartnerInfos($idPartner)
+{
+	$db=dbConnect();
+
+	$req=$db->prepare('SELECT * FROM partners WHERE id_partner=?');
+	$req->execute(array($idPartner));
+	$data = $req->fetch();
+	$req->closecursor();
+
+	return $data;
+}
+
+function countPartners()
+{
+	$db=dbConnect();
+
+	$req=$db->query('SELECT count(id_partner) AS total_partner FROM partners');
+	$data = $req->fetch();
+	$req->closecursor();
+
+	return $data['total_partner'];
 }
 

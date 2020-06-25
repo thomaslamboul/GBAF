@@ -12,21 +12,39 @@ ALL
 }
 body
 {
-	min-height: 650px;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	align-items: stretch;
 	/*background: linear-gradient(white, 80%, #fc0404);
 	background-repeat: no-repeat;
 	#fc0404 rgba(252,4,4,0.2)
 	#040404 rgb(4,4,4)
 	background-color: rgba(249,249,249, 0.3);/*#F9F9F9*/
+}
+#background
+{
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: stretch;	
+}
+.background-image
+{
 	background-image: url(../images/master_resized.jpg);
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-attachment: fixed;
 	opacity: 0.9;
+}
+/*.body-formsPages
+{
+	background-image: url(../images/mastertest.jpg);
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-attachment: fixed;
+	opacity: 0.9;
+}*/
+h1, h2
+{
+	font-family: sans-serif;
 }
 ul
 {
@@ -42,7 +60,7 @@ a:hover
 {
 	color: #fc0404;
 }
-input:focus
+input:focus, a:focus
 {
 	outline:none;
 }
@@ -59,12 +77,12 @@ header *
 header
 {
 	background-color: rgba(255,255,255, 0.9);
-	height: 75px;
+	height: 100px;
 	display: flex;
 }
 header nav
 {
-	width: 97%;
+	width: 95%;
 	margin: auto;
 }
 header ul
@@ -131,7 +149,8 @@ PAGE CONNECTION
 ********************************************************************************************************/
 #section-forms
 {
-	padding-bottom: 40px; 
+	padding-top: 30px;
+	padding-bottom: 30px; 
 	background-color: rgba(200,200,200, 0.3);
 	box-shadow: 0px 0px 50px 1px;
 }
@@ -165,12 +184,12 @@ legend
 	text-align: center;
 	font-size: 1.5em;
 	letter-spacing: 0.5em;
-	text-shadow:0px 0px 10px white;
+	text-shadow:0px 0px 5px white, 1px 1px 5px white,-1px -1px 5px white,2px 2px 5px white;
 	/*color: #fc0404;*/
 }
 label
 {
-	text-shadow:0px 0px 10px white;
+	text-shadow:0px 0px 5px white, 1px 1px 5px white,-1px -1px 5px white,2px 2px 5px white;
 	letter-spacing: 0.2em;
 	font-size: 1.1em;
 }
@@ -180,13 +199,13 @@ input[type=text], input[type=password]
 	margin-top: 5px;
 	margin-bottom: 30px;
 	background-color: white;
-	border: solid #E7E8EB 1px;
+	border: solid #a5a5a5 1px;
 	border-radius: 5px;
 	height: 30px;
 }
 input[type=text]:hover, input[type=password]:hover
 {
-	box-shadow: 1px 1px 5px 4px #E7E8EB;
+	box-shadow: 0px 0px 2px 1px black;
 	border: none;
 	border-radius: 5px;
 }
@@ -283,10 +302,15 @@ PAGE PARTNERS
 ********************************************************************************************************/
 .sections-partersPage
 {
-	background-color: white;
+	/*background-color: rgb(245,0,0,0.7);*/
 	width: 100%;
 	display: flex;
 	flex-direction: column;
+}
+.sections-partersPage h1, .sections-partersPage h2
+{
+	letter-spacing: 0.3em;
+	margin-bottom: 20px;
 }
 .sections-partersPage > div
 {
@@ -294,18 +318,21 @@ PAGE PARTNERS
 }
 #master
 {
-	height: 100px;
-	width: 97%;
-	background-image: url("../images/master_resized.jpg");
+	height: 275px;
+	width: 100%;
+	background-image: url("../images/presentation_gbaf.jpg");
 	background-size: cover;
 	background-repeat: no-repeat;
-	margin-bottom: 15px;
-	
 }
 #section-presentation
 {
-	border-bottom: solid 1px black;
-	border-top: solid 1px black;
+	/*background-color: rgba(0,0,0,0.1);*/
+	margin: auto auto 0px auto;
+	padding-top: 50px;
+}
+#section-partner
+{
+	margin-bottom: 30px;
 }
 #section-partner p
 {
@@ -313,25 +340,53 @@ PAGE PARTNERS
 }
 #listpartners-block
 {
-	background-color: black;
+	/*background-color: black;*/
 	padding-bottom: 1px;
 	padding-top: 1px;
+	background-image: url("../images/listpartners_resized.jpg");
+	background-size: cover;
+	background-repeat: no-repeat;
+	border-radius: 10px;
+
 }
 #partner-block
 {
-	margin: 10px;
+	color: white;
+	opacity: 0.85;
+	margin: 30px;
 	padding: 20px 20px 10px 20px;
 	display: flex;
-	background-color: #e3e3e3;
+	align-items: center;
+	background-color: black;
+	border-radius: 10px;
+	box-shadow:0px 0px 5px 1px black;
 }
 #partner-block p, #partner-block div
 {
-	margin: auto 10px 20px auto;
+	margin: auto 10px auto auto;
 }
 #partner-block p img
 {
 	border: 1px black solid;
 	border-radius: 5px;
+	height: 120px;
+	width: 100%;
+}
+#partner-block p:nth-child(1)
+{
+	flex:1;
+}
+#partner-content:nth-child(2)
+{
+	flex:2;
+}
+#partner-content h3
+{
+	margin-bottom: 20px;
+}
+#partner-block a[href="#"]
+{
+	text-decoration: underline;
 }
 #partner-block a[title="Lire la suite..."]:nth-child(3)
 {
@@ -342,12 +397,12 @@ PAGE PARTNERS
 	border-radius: 10px;
 	border:none;
 	color: white;
-	letter-spacing: 0.1em;
-	padding: 10px 50px 10px 50px;
+	letter-spacing: 0.2em;
+	padding: 10px 30px 10px 30px;
+	font-size: 0.7em;
 }
 #partner-block a[title="Lire la suite..."]:hover
 {
-	font-weight: bold;
 	background-color: rgb(53,64,70,0.8);
 	cursor:pointer;
 }
@@ -366,10 +421,15 @@ footer
 	color: white;
 	letter-spacing: 0.2em;
 	font-size: 0.8em;
+	opacity: 0.9;
 }
 footer ul
 {
 	display: flex;
+}
+footer a
+{
+	color: white;
 }
 .verticalSeparator
 {

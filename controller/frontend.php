@@ -315,7 +315,25 @@ function listPartners()
 	require('view/frontend/listPartnersView.php');
 }
 
+function cutString($string/*, $length = 150*/) 
+{
+	$sentence = explode(".", $string);
+	/*if(strlen($string) <= $length)
+	{
+		return $txt;
+	}
+ 	$string = substr($string, 0, $length);*/
+
+ 	/*return substr($string, 0, strrpos($string, ' ')).'...';*/
+ 	return $sentence[0].'...';
+}
+
 function listComments()
 {
+	$idPartner=htmlspecialchars($_GET['partner']);
 
+	
+
+	$partner = getPartnerInfos($idPartner);
+	require('view/frontend/listCommentsView.php');
 }

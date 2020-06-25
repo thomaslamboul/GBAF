@@ -21,7 +21,7 @@ try
 		forgotPassword();
 	}
 	//accès au site
-	elseif (isset($_SESSION['username']) AND isset($_SESSION['password']) AND isset($_COOKIE['firstname']) AND isset($_COOKIE['lastname']))
+	elseif (isset($_SESSION['username']) AND isset($_SESSION['password']) AND isset($_SESSION['firstname']) AND isset($_SESSION['lastname']))
 	{
 		//page principal (liste des acteurs)
 		if(isset($_GET['action']) AND $_GET['action'] == 'comments' AND isset($_GET['partner'])) 
