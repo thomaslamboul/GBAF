@@ -332,8 +332,17 @@ function listComments()
 {
 	$idPartner=htmlspecialchars($_GET['partner']);
 
-	
+	$totalPartners = countPartners();
 
-	$partner = getPartnerInfos($idPartner);
-	require('view/frontend/listCommentsView.php');
+	if (!ctype_digit($idPartner) AND $idPartner < $totalPartners OR $idPartner > $totalPartners OR $idPartner == 0) 
+	{
+		header('Location: index.php');
+	}
+	else
+	{
+		$partner = getPartnerInfos($idPartner);
+		$data = getComments($idPartner);
+		$totalPosts = countPosts($idPartner);
+		require('view/frontend/listCommentsView.php');
+	}
 }

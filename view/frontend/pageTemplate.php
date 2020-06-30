@@ -19,7 +19,7 @@
                         {
                         ?>
                             <li><a href="" title="Paramètres de l'utilisateur"><img src="public/images/logo_profil.png" class="logo" id="logo_profil"><?=$_SESSION['lastname'] .' '. $_SESSION['firstname']?></a></li>
-                            <li><a href="index.php?action=logout" title="Déconnexion" class="navButton"><img src="public/images/logo_logout.png" class="logo" id="logo_logout">Se déconnecter</a></li>
+                            <li id="li_logout"><a href="index.php?action=logout" title="Déconnexion" class="navButton"><img src="public/images/logo_logout.png" class="logo" id="logo_logout">Se déconnecter</a></li>
                         <?php 
                         }
                         elseif(isset($_GET['action']) AND $_GET['action'] == 'registration')

@@ -145,10 +145,32 @@ function countPartners()
 {
 	$db=dbConnect();
 
-	$req=$db->query('SELECT count(id_partner) AS total_partner FROM partners');
+	$req=$db->query('SELECT count(id_partner) AS total_partners FROM partners');
 	$data = $req->fetch();
 	$req->closecursor();
 
-	return $data['total_partner'];
+	return $data['total_partners'];
 }
 
+function getComments($idPartner)
+{
+	$db=dbConnect();
+
+	$req=$db->prepare('SELECT *, DATE_FORMAT(date_add, "Le %d/%m/%Y à %Hh%i") AS formated_date, accounts.first_name FROM posts INNER JOIN accounts ON posts.id_user=accounts.id_user WHERE id_partner=? ORDER BY date_add DESC');
+	$req->execute(array($idPartner));
+
+	return $req;
+}
+
+function countPosts($idPartner)
+{
+	$db=dbConnect();
+
+	$req=$db->prepare('SELECT count(id_post) AS total_posts FROM posts WHERE id_partner=?');
+	$req->execute(array($idPartner));
+	$data = $req->fetch();
+	$req->closecursor();
+
+	return $data['total_posts'];
+}
+//Fonction en cour

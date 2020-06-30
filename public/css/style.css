@@ -79,6 +79,7 @@ header
 	background-color: rgba(255,255,255, 0.9);
 	height: 100px;
 	display: flex;
+	box-shadow: 0px 2px 10px  rgba(0,0,0,0.7);
 }
 header nav
 {
@@ -98,16 +99,20 @@ header ul
 }
 #userBlock
 {
+	width: auto;
 	display: flex;
 	flex-direction: column;
-	justify-content: space-around;
+	justify-content: center;
 	align-items: flex-end;
 }
 #userBlock li
 {
 	height: 20px;
 	width: auto;
-	margin-right: 10px;
+}
+#li_logout
+{
+	margin-top: 25px;
 }
 .logo
 {
@@ -149,6 +154,7 @@ PAGE CONNECTION
 ********************************************************************************************************/
 #section-forms
 {
+	width: 100%;
 	padding-top: 30px;
 	padding-bottom: 30px; 
 	background-color: rgba(200,200,200, 0.3);
@@ -309,12 +315,14 @@ PAGE PARTNERS
 }
 .sections-partersPage h1, .sections-partersPage h2
 {
-	letter-spacing: 0.3em;
+	letter-spacing: 0.2em;
 	margin-bottom: 20px;
+	color: #fc0404;
+	font-size: 2em;
 }
 .sections-partersPage > div
 {
-	margin: 10px 40px 20px 40px;
+	margin: 10px 40px 40px 40px;
 }
 #master
 {
@@ -329,6 +337,15 @@ PAGE PARTNERS
 	/*background-color: rgba(0,0,0,0.1);*/
 	margin: auto auto 0px auto;
 	padding-top: 50px;
+}
+#section-presentation p
+{
+	
+
+}
+#section-presentation h1
+{
+	
 }
 #section-partner
 {
@@ -406,6 +423,87 @@ PAGE PARTNERS
 	background-color: rgb(53,64,70,0.8);
 	cursor:pointer;
 }
+/********************************************************************************************************
+*********************************************************************************************************
+PAGE COMMENTS
+*********************************************************************************************************
+********************************************************************************************************/
+section
+{
+	margin: auto;
+	width: 90%;
+}
+#comments_block
+{
+	margin: 20px auto 20px auto;
+	width: 90%;
+	display: flex;
+	flex-direction: column;
+	/*padding-bottom: 1px;
+	padding-top: 1px;*/
+	background-color:#1E1E1E;
+	border-radius: 10px;
+}
+#header_comments_block
+{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin: auto 30px auto 30px;
+	padding: 20px 0 20px 0;
+	color: white;
+}
+#header_comments_block > div
+{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 30%;
+}
+#like_dislike_block
+{
+	display: flex;
+	justify-content: center;
+	text-align: right;
+	height: 40px;
+}
+#like_dislike_block a:hover
+{
+	opacity: 0.6;
+}
+#new_com_button
+{
+	font-family: sans-serif;
+	text-align: center;
+	display: block;
+	background-color: #fc0404;
+	transition: background-color 0.5s;
+	border-radius: 10px;
+	color: black;
+	letter-spacing: 0.1em;
+	padding: 10px 20px 10px 20px;
+	font-size: 1em;
+}
+#new_com_button:hover
+{
+	background-color: rgb(53,64,70,0.8);
+	cursor:pointer;
+	color: white;
+}
+.comment
+{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	color: white;
+	opacity: 0.85;
+	margin: 10px 30px 20px 30px;
+	padding: 10px 20px 10px 20px;
+	background-color: black;
+	border-radius: 10px;
+	box-shadow:0px 0px 5px 1px black;
+}
+
 /********************************************************************************************************
 *********************************************************************************************************
 FOOTER
