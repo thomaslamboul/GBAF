@@ -7,7 +7,7 @@
         <title><?= $title ?></title>
     </head>
     <body>
-    <div id="background"<?php if(!isset($_SESSION['username'])){?>class="background-image"<?php }?>>
+    <div id="background"<?php if(!isset($_SESSION['username'])){?>class="background_forms"<?php }elseif(isset($_GET['action']) AND $_GET['action'] == 'comments'){?>class="background_comments_page"<?php }?>>
         <header>
             <nav>
                 <ul>

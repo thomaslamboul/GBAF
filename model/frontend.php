@@ -173,4 +173,39 @@ function countPosts($idPartner)
 
 	return $data['total_posts'];
 }
-//Fonction en cour
+
+function countLikeVotes($idPartner)
+{
+	$db=dbConnect();
+
+	$req=$db->prepare('SELECT count(id_user) AS total_votes FROM votes WHERE id_partner=? AND vote=1');
+	$req->execute(array($idPartner));
+	$data = $req->fetch();
+	$req->closecursor();
+
+	return $data['total_votes'];
+}
+
+function countDislikeVotes($idPartner)
+{
+	$db=dbConnect();
+
+	$req=$db->prepare('SELECT count(id_user) AS total_votes FROM votes WHERE id_partner=? AND vote=0');
+	$req->execute(array($idPartner));
+	$data = $req->fetch();
+	$req->closecursor();
+
+	return $data['total_votes'];
+}
+
+function addVote($idUser, $idPartner, $voteValue)
+{
+	$db=dbConnect();
+
+	$req=$db->prepare('INSERT INTO votes VALUES(:id_user, :id_partner, :vote)');
+		$req->execute(array(
+            	'id_user' => $idUser,
+            	'id_partner' => $idPartner,
+            	'vote' => $voteValue, 
+            ));
+}

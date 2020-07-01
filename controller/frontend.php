@@ -343,6 +343,24 @@ function listComments()
 		$partner = getPartnerInfos($idPartner);
 		$data = getComments($idPartner);
 		$totalPosts = countPosts($idPartner);
+
+		if (isset($_GET['value'])) 
+		{
+			$voteValue = htmlspecialchars($_GET['value']);
+			if ($voteValue == 0 OR $voteValue == 1) 
+			{
+				$userInfos = getUserInfos($_SESSION['username']);
+				addVote($userInfos['id_user'], $idPartner, $voteValue);
+			}
+			else
+			{
+				/*voir quoi faire*/
+			}
+		}
+
+		$likeVotes = countLikeVotes($idPartner);
+		$dislikeVotes = countDislikeVotes($idPartner);
+		
 		require('view/frontend/listCommentsView.php');
 	}
 }

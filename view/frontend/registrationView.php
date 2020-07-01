@@ -46,12 +46,12 @@ if($step == 2)
                             <img src="public/images/infobulle_aide_icon.png" alt=" ? " />
                             <ul>
                                 <li>En cas d'oubli de votre mot de passe cette question vous sera posée</li>
-                                <li>Choisissez une question très personnelle dont vous seul connait la réponse</li>
-                                <li>Choisissez une question qui attend une réponse courte avec un seul mot</li>
+                                <li>Choisissez une question très personnelle dont <strong>vous seul</strong> connaissez la réponse</li>
+                                <li>Choisissez une question à laquelle une simple recherche sur vos réseaux sociaux ne permet pas d'y répondre</li>
                             </ul>
                         </a>
                     </div>
-                        <input type="text" name="questionRegistration" placeholder="Ex: Quel était mon surnom à l'université ? / Comment s'appellait mon chien lorsque j'avais 15 ans ? / Quel est le prénom de la personne que j'aime le plus ?" value="<?php if(isset($questionCheck) AND $questionCheck){echo "$question";}?>" required>
+                        <input type="text" name="questionRegistration" placeholder="Ex: Quel est le nom et prénom de mon premier amour ? / Quel est le nom de famille de mon professeur d’enfance préféré ? / Quel est mon jeu vidéo favori ?" value="<?php if(isset($questionCheck) AND $questionCheck){echo "$question";}?>" required>
 
                     <div class="blocWithTooltip">
                         <label for="answerRegistration"><?php if(isset($answerCheck) AND !$answerCheck){?><span class="error">Veuillez saisir une réponse secrète</span><?php }else{?>Réponse à votre question secrète<?php }?></label>
@@ -59,11 +59,11 @@ if($step == 2)
                             <img src="public/images/infobulle_aide_icon.png" alt=" ? " />
                             <ul>
                                 <li>En cas d'oubli de votre mot de passe la réponse à votre question vous sera demandée</li>
-                                <li>Choisissez une réponse courte avec un seul mot</li>
+                                <li>Il est recommandé d'ajouter une combinaison de chiffre ou des caractères spéciaux dans votre réponse que vous seul connaissez</li>
                             </ul>
                         </a>
                     </div>
-                    <input type="text" name="answerRegistration" placeholder="Ex: Bogosse / Rex / Aïden" value="<?php if(isset($answerCheck) AND $answerCheck){echo "$answer";}?>" required>
+                    <input type="text" name="answerRegistration" placeholder="Ex: Martin5 Sylvain6 / Durand!5! / Civilization !6!" value="<?php if(isset($answerCheck) AND $answerCheck){echo "$answer";}?>" required>
                     <input type="hidden" name="lastname" value="<?=$lastname?>">
                     <input type="hidden" name="firstname" value="<?=$firstname?>">
                     <input type="hidden" name="username" value="<?=$username?>">
