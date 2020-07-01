@@ -162,16 +162,16 @@ function getComments($idPartner)
 	return $req;
 }
 
-function countPosts($idPartner)
+function countComments($idPartner)
 {
 	$db=dbConnect();
 
-	$req=$db->prepare('SELECT count(id_post) AS total_posts FROM posts WHERE id_partner=?');
+	$req=$db->prepare('SELECT count(id_post) AS total_comments FROM posts WHERE id_partner=?');
 	$req->execute(array($idPartner));
 	$data = $req->fetch();
 	$req->closecursor();
 
-	return $data['total_posts'];
+	return $data['total_comments'];
 }
 
 function countLikeVotes($idPartner)
@@ -190,12 +190,22 @@ function countDislikeVotes($idPartner)
 {
 	$db=dbConnect();
 
-	$req=$db->prepare('SELECT count(id_user) AS total_votes FROM votes WHERE id_partner=? AND vote=0');
+	$req=$db->prepare('SELECT count(id_user) AS total_votes FROM votes WHERE id_partner=? AND vote=2');
 	$req->execute(array($idPartner));
 	$data = $req->fetch();
 	$req->closecursor();
 
 	return $data['total_votes'];
+}
+
+function checkAlreadyVoted($idUser, $idPartner)
+{
+	$db=dbConnect();
+
+	$req=$db->prepare('SELECT vote, count(*) AS already_voted FROM votes WHERE id_user=? AND id_partner=?');
+	$req->execute(array($idUser,$idPartner));
+
+	return $req;
 }
 
 function addVote($idUser, $idPartner, $voteValue)
@@ -208,4 +218,16 @@ function addVote($idUser, $idPartner, $voteValue)
             	'id_partner' => $idPartner,
             	'vote' => $voteValue, 
             ));
+}
+
+function updateVote($idUser, $idPartner, $voteValue)
+{
+	$db=dbConnect();
+
+	$req=$db->prepare('UPDATE votes SET vote= :voteValue WHERE id_user= :idUser AND id_partner= :idPartner');
+	$req->execute(array(
+        	'voteValue' => $voteValue,
+        	'idUser' => $idUser,
+        	'idPartner' => $idPartner
+        ));
 }

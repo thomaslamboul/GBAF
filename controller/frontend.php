@@ -328,9 +328,10 @@ function cutString($string/*, $length = 150*/)
  	return $sentence[0].'...';
 }
 
+//Page des commentaires
 function listComments()
 {
-	$idPartner=htmlspecialchars($_GET['partner']);
+	$idPartner= htmlspecialchars($_GET['partner']);
 
 	$totalPartners = countPartners();
 
@@ -340,27 +341,57 @@ function listComments()
 	}
 	else
 	{
-		$partner = getPartnerInfos($idPartner);
-		$data = getComments($idPartner);
-		$totalPosts = countPosts($idPartner);
+		$partner = getPartnerInfos($idPartner); //récupère les données des partenaires
+		$data = getComments($idPartner); //récupère les données des commentaires
+		$totalComments = countComments($idPartner); //compte le nombre total de commentaires
+		$userInfos = getUserInfos($_SESSION['username']); //récupère les données de l'utilisateur connecté
 
-		if (isset($_GET['value'])) 
+		$req = checkAlreadyVoted($userInfos['id_user'], $idPartner); //vérifie si l'utilisateur connecté à déjà voté
+		$dataVote = $req->fetch();
+		$req->closecursor();
+
+		if (isset($_GET['like'])) 
 		{
-			$voteValue = htmlspecialchars($_GET['value']);
-			if ($voteValue == 0 OR $voteValue == 1) 
+			$voteValue = (int) htmlspecialchars($_GET['like']);
+		
+			if($dataVote['already_voted'] == 0)
 			{
-				$userInfos = getUserInfos($_SESSION['username']);
 				addVote($userInfos['id_user'], $idPartner, $voteValue);
+				/*header('Location: index.php?action=comments&amp;partner='.htmlspecialchars($partner['id_partner']));*/
 			}
-			else
+			elseif($dataVote['already_voted'] == 1 AND $dataVote['vote'] != 1)
 			{
-				/*voir quoi faire*/
+				updateVote($userInfos['id_user'], $idPartner, $voteValue);
 			}
+
+			$req = checkAlreadyVoted($userInfos['id_user'], $idPartner);
+			$dataVote = $req->fetch();
+			$req->closecursor();
+		}
+		elseif (isset($_GET['dislike'])) 
+		{
+			$voteValue = (int) htmlspecialchars($_GET['dislike']);
+
+			if($dataVote['already_voted'] == 0)
+			{
+				addVote($userInfos['id_user'], $idPartner, $voteValue);
+				$alreadyVoted = 1;
+				/*header('Location: index.php?action=comments&amp;partner='.htmlspecialchars($partner['id_partner']));*/
+			}
+			elseif($dataVote['already_voted'] == 1 AND $dataVote['vote'] != 2)
+			{
+				updateVote($userInfos['id_user'], $idPartner, $voteValue);
+				$alreadyVoted = 1;
+			}
+
+			$req = checkAlreadyVoted($userInfos['id_user'], $idPartner);
+			$dataVote = $req->fetch();
+			$req->closecursor();
 		}
 
 		$likeVotes = countLikeVotes($idPartner);
 		$dislikeVotes = countDislikeVotes($idPartner);
-		
+
 		require('view/frontend/listCommentsView.php');
 	}
 }

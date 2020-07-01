@@ -1,5 +1,5 @@
 <?php $css = 'style.css'; ?>
-<?php $title = 'GBAF - Groupement Banque Assurance Français'; ?>
+<?php $title = 'GBAF | Acceuil'; ?>
 
 <?php ob_start(); ?>
     	<section class="sections-partersPage" id="section-presentation">
@@ -19,7 +19,7 @@
 while ($partners = $data->fetch()) 
 {
 ?>
-                    <div id="partner-block">
+                    <div id="partner_block">
                         <p>
                             <img src="data:image/png;base64,<?=htmlspecialchars(base64_encode($partners['logo']))?>" alt="Logo des acteurs et partenaires" title="<?=htmlspecialchars($partners['partner'])?>" class="logo"/>
                         </p>

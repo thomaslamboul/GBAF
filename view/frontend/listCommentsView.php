@@ -1,10 +1,10 @@
 <?php $css = 'style.css'; ?>
-<?php $title = ''.$partner['partner'].'- GBAF'; ?>
+<?php $title = 'GBAF | '.$partner['partner'].''; ?>
 
 <?php ob_start(); ?>
     	
         <section id="section_partner_comments_page">
-
+            <a href="index.php#partner_block" class="back_button"><img src="public/images/back_icon.png" alt="Back icon" class="logo"> Retour</a>
             <div id="block_partner_comments_page">
                 <p id="logo_partner_comments_page">
                     <img src="data:image/png;base64,<?=htmlspecialchars(base64_encode($partner['logo']))?>" alt="Logo des acteurs et partenaires" title="<?=htmlspecialchars($partner['partner'])?>" class="logo"/>
@@ -16,19 +16,23 @@
 
             <div id="comments_block">
                 <div id="header_comments_block">
-                    <h3><?=htmlspecialchars($totalPosts)?> commentaires</h3>
+                    <h3><?=htmlspecialchars($totalComments)?> commentaire<?php if(htmlspecialchars($totalComments) != 0){?>s<?php }?></h3>
                     <div>
                         <div>
                             <a href="index.php?action=addComment&amp;partner=<?=htmlspecialchars($partner['id_partner'])?>" id="new_com_button">Nouveau<br>commentaire</a>
                         </div>
                         <div id="like_dislike_block">
-
-                            <a href="index.php?action=comments&amp;partner=<?=htmlspecialchars($partner['id_partner'])?>&amp;value=1#comments_block" ><img src="public/images/like_blue.png" alt="like" class="logo"></a>
+                    
+                            <a href="index.php?action=comments&amp;partner=<?=htmlspecialchars($partner['id_partner'])?>&amp;like=1#comments_block" <?php if($dataVote['vote'] == 1){?>class="disabled_link"<?php }?>><img src="public/images/like_blue.png" alt="like" class="logo"></a>
                             <p><?=htmlspecialchars($likeVotes)?></p>
-                            <a href="index.php?action=comments&amp;partner=<?=htmlspecialchars($partner['id_partner'])?>&amp;value=0#comments_block" ><img src="public/images/dislike_red.png" alt="dislike" class="logo"></a>
+                            <a href="index.php?action=comments&amp;partner=<?=htmlspecialchars($partner['id_partner'])?>&amp;dislike=2#comments_block" <?php if($dataVote['vote'] == 2){?>class="disabled_link"<?php }?>><img src="public/images/dislike_red.png" alt="dislike" class="logo"></a>
                             <p><?=htmlspecialchars($dislikeVotes)?></p>
-                            <!--<a href="" ><img src="public/images/like.png" alt="like" class="logo"></a>
-                            <a href="" ><img src="public/images/dislike.png" alt="dislike" class="logo"></a>-->
+                      
+                            <!--<img src="public/images/like_blue.png" alt="like" class="logo">
+                            <p><?=htmlspecialchars($likeVotes)?></p>
+                            <img src="public/images/dislike_red.png" alt="dislike" class="logo">
+                            <p><?=htmlspecialchars($dislikeVotes)?></p>-->
+                      
                         </div> 
                     </div>
                 </div>
@@ -61,7 +65,7 @@ $data->closecursor();
 ?>
                 
             </div>
-
+            <a href="index.php#partner_block" class="back_button"><img src="public/images/back_icon.png" alt="Back icon" class="logo"> Retour</a>
         </section>
 
 <?php $content = ob_get_clean(); ?>

@@ -71,6 +71,32 @@ input:focus, a:focus
 {
 	outline:none;
 }
+.back_button
+{
+	align-self: flex-start;
+	margin: 30px 20px;
+	font-family: sans-serif;
+	text-align: center;
+	background-color: rgba(235,4,4,0.9);
+	transition: background-color 0.5s;
+	border-radius: 10px;
+	color: white;
+	letter-spacing: 0.1em;
+	padding: 10px 15px;
+	font-size: 0.8em;
+}
+.back_button:hover
+{
+	background-color: rgba(53,64,70,0.5);
+	cursor:pointer;
+	font-weight: bold;
+	color: white;
+}
+.back_button img
+{
+	height: 12px;
+	width: 20px;
+}
 /********************************************************************************************************
 *********************************************************************************************************
 HEADER
@@ -118,7 +144,7 @@ header ul
 	width: auto;
 	color: black;
 }
-#userBlock li a
+#userBlock li a[title="Paramètres de l'utilisateur"], #userBlock li a[title="Déconnexion"]
 {
 	color: black;
 }
@@ -200,7 +226,6 @@ fieldset
 }
 legend
 {
-	margin-top: 20px;
 	margin-bottom: 30px;
 	width: 100%;
 	text-align: center;
@@ -343,7 +368,7 @@ PAGE PARTNERS
 #master
 {
 	height: 275px;
-	width: 100%;
+	width: 75%;
 	background-image: url("../images/presentation_gbaf.jpg");
 	background-size: cover;
 	background-repeat: no-repeat;
@@ -382,7 +407,7 @@ PAGE PARTNERS
 	border-radius: 10px;
 
 }
-#partner-block
+#partner_block
 {
 	color: white;
 	opacity: 0.85;
@@ -394,18 +419,18 @@ PAGE PARTNERS
 	border-radius: 10px;
 	box-shadow:0px 0px 5px 1px black;
 }
-#partner-block p, #partner-block div
+#partner_block p, #partner_block div
 {
 	margin: auto 10px auto auto;
 }
-#partner-block p img
+#partner_block p img
 {
 	border: 1px black solid;
 	border-radius: 5px;
 	height: 120px;
 	width: 100%;
 }
-#partner-block p:nth-child(1)
+#partner_block p:nth-child(1)
 {
 	flex:1;
 }
@@ -417,11 +442,11 @@ PAGE PARTNERS
 {
 	margin-bottom: 20px;
 }
-#partner-block a[href="#"]
+#partner_block a[href="#"]
 {
 	text-decoration: underline;
 }
-#partner-block a[title="Lire la suite..."]:nth-child(3)
+#partner_block a[title="Lire la suite..."]:nth-child(3)
 {
 	align-self: flex-end;
 	white-space: nowrap;
@@ -434,7 +459,7 @@ PAGE PARTNERS
 	padding: 10px 30px 10px 30px;
 	font-size: 0.7em;
 }
-#partner-block a[title="Lire la suite..."]:hover
+#partner_block a[title="Lire la suite..."]:hover
 {
 	background-color: rgb(53,64,70,0.8);
 	cursor:pointer;
@@ -457,7 +482,6 @@ PAGE COMMENTS
 }
 #block_partner_comments_page
 {
-	margin-top: 40px;
 	display: flex;
 	flex-direction: column;
 	margin-bottom: 40px;
@@ -486,7 +510,6 @@ PAGE COMMENTS
 	border-radius: 10px;
 	width: 90%;
 	opacity: 0.95;
-	margin-bottom: 40px;
 }
 #header_comments_block
 {
@@ -511,13 +534,18 @@ PAGE COMMENTS
 #like_dislike_block
 {
 	display: flex;
-	justify-content: center;
+	justify-content: space-between;
 	text-align: right;
 	height: 35px;
 }
 #like_dislike_block a:hover
 {
 	filter: brightness(2);
+}
+.disabled_link
+{
+	pointer-events: none;
+	cursor: default;
 }
 #like_dislike_block p
 {
@@ -530,17 +558,17 @@ PAGE COMMENTS
 	font-family: sans-serif;
 	text-align: center;
 	display: block;
-	background-color: #fc0404;
+	background-color: rgba(235,4,4,0.9);
 	transition: background-color 0.5s;
 	border-radius: 10px;
-	color: black;
+	color: white;
 	letter-spacing: 0.1em;
 	padding: 10px 20px 10px 20px;
 	font-size: 0.8em;
 }
 #new_com_button:hover
 {
-	background-color: rgb(53,64,70,0.8);
+	background-color: rgba(53,64,70,0.5);
 	cursor:pointer;
 	color: white;
 }
@@ -573,11 +601,10 @@ footer
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	background-color: rgb(4,4,4);
+	background-color: rgba(4,4,4,0.9);
 	color: white;
 	letter-spacing: 0.2em;
 	font-size: 0.8em;
-	opacity: 0.9;
 }
 footer ul
 {

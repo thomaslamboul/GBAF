@@ -1,8 +1,9 @@
 <?php $css = 'style.css'; ?>
-<?php $title = 'Inscription - GBAF'; ?>
+<?php $title = 'GBAF | Inscription'; ?>
 
 <?php ob_start(); ?>
     	<section id="section-forms">
+            <a href="index.php" class="back_button"><img src="public/images/back_icon.png" alt="Back icon" class="logo"> Retour</a>
             <form method="post" action="index.php?action=registration">
                 <fieldset>
 
@@ -108,6 +109,7 @@ if($step == 3)
 
                 </fieldset>
             </form>
+
         </section>
 
 <?php $content = ob_get_clean(); ?>

@@ -1,8 +1,9 @@
 <?php $css = 'style.css'; ?>
-<?php $title = 'Mot de passe oublié - GBAF'; ?>
+<?php $title = 'GBAF | Mot de passe oublié'; ?>
 
 <?php ob_start(); ?>
     	<section id="section-forms">
+            <a href="index.php" class="back_button"><img src="public/images/back_icon.png" alt="Back icon" class="logo"> Retour</a>
             <form method="post" action="index.php?action=forgotPsw">
                 <fieldset>
                     <legend><strong>Création d'un nouveau mot de passe - Étape <?=$step?></strong></legend>  
