@@ -2,12 +2,13 @@
 <html lang="fr">         
     <head>   
         <meta charset="utf-8" />
-       <link rel="stylesheet" type="text/css" href="public/css/<?= $css ?>"/>
-       <link rel="shortcut icon" type="image/png" href="public/images/favicon.png"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" type="text/css" href="public/css/<?= $css ?>"/>
+        <link rel="shortcut icon" type="image/png" href="public/images/favicon.png"/>
         <title><?= $title ?></title>
     </head>
     <body>
-    <div id="background" <?php if(!isset($_SESSION['username'])){?>class="background_forms"<?php }elseif(isset($_GET['action']) AND $_GET['action'] == 'comments'){?>class="background_comments_page"<?php }?>>
+    <div id="background" <?php if(!isset($_SESSION['username'])){?>class="background_forms"<?php }elseif(!isset($_GET['action']) AND isset($_SESSION['username'])){?>class="background_main_page"<?php }elseif(isset($_GET['action']) AND $_GET['action'] == 'comments' OR $_GET['action'] == 'addComment'){?>class="background_comments_page"<?php }?>>
         <header>
             <nav>
                 <ul>

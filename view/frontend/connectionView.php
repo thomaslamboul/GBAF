@@ -2,7 +2,7 @@
 <?php $title = 'GBAF | Connexion'; ?>
 
 <?php ob_start(); ?>
-    	<section id="section-forms">
+    	<section id="section_forms_connection_page" class="section_forms">
             <form method="post" action="index.php">
                 <fieldset>
                     <legend><strong>Connexion</strong></legend>                    

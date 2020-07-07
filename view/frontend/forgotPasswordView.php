@@ -2,7 +2,7 @@
 <?php $title = 'GBAF | Mot de passe oublié'; ?>
 
 <?php ob_start(); ?>
-    	<section id="section-forms">
+    	<section class="section_forms">
             <a href="index.php" class="back_button"><img src="public/images/back_icon.png" alt="Back icon" class="logo"> Retour</a>
             <form method="post" action="index.php?action=forgotPsw">
                 <fieldset>

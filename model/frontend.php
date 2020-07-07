@@ -1,5 +1,6 @@
 <?php
 
+//Connexion à la BDD
 function dbConnect()
 {
     $db = new PDO('mysql:host=localhost;dbname=GBAF;charset=utf8', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
@@ -7,6 +8,7 @@ function dbConnect()
     return $db;
 }
 
+//Vérification de la correspondance du username et du mot de passe saisis avec ceux de la BDD dans la table 'accounts'
 function checkLogins($username, $password)
 {
 	$db=dbConnect();
@@ -41,6 +43,7 @@ function checkLogins($username, $password)
 	return false;
 }
 
+//Vérification
 function checkPostUsername($username)
 {
 	$db=dbConnect();
@@ -230,4 +233,35 @@ function updateVote($idUser, $idPartner, $voteValue)
         	'idUser' => $idUser,
         	'idPartner' => $idPartner
         ));
+}
+
+function checkAlreadyCommented($idPartner, $idUser)
+{
+	$db=dbConnect();
+
+	$req=$db->prepare('SELECT count(id_post) AS count_comment FROM posts INNER JOIN accounts ON posts.id_user=accounts.id_user INNER JOIN partners ON posts.id_partner=partners.id_partner WHERE posts.id_user= :idUser AND posts.id_partner= :idPartner');
+	$req->execute(array(
+			'idUser' => $idUser,
+			'idPartner' => $idPartner,
+	));
+	$data = $req->fetch();
+	$req->closecursor();
+
+	if ($data['count_comment'] == 0) 
+	{
+		return false;
+	}
+	else
+	{
+		return true;
+	}
+}
+
+//Insertion du commentaire dans la table 'posts'
+function addCommentDB($idUser, $idPartner, $comment)
+{
+	$db=dbConnect();
+
+    $req=$db->prepare('INSERT INTO posts(id_user, id_partner, date_add, post) VALUES(?, ?, NOW(), ?)');
+    $req->execute(array($idUser, $idPartner, $comment));
 }

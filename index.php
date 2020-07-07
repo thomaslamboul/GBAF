@@ -5,30 +5,35 @@ require('controller/frontend.php');
 
 try
 {
-	//page de déconnexion
+	//condition de routage vers fonction de déconnexion
 	if(isset($_GET['action']) AND $_GET['action'] == 'logout')
 	{
 		logout();
 	}
-	//page de d'inscription
+	//condition de routage vers page de d'inscription
 	elseif(isset($_GET['action']) AND $_GET['action'] == 'registration' AND !isset($_SESSION['username']) AND !isset($_SESSION['password']))
 	{
 		registration();
 	}
-	//page "mot de passe oublié""
+	//condition de routage vers page 'mot de passe oublié''
 	elseif(isset($_GET['action']) AND $_GET['action'] == 'forgotPsw' AND !isset($_SESSION['username']) AND !isset($_SESSION['password']))
 	{
 		forgotPassword();
 	}
-	//accès au site
+	//condition d'accès au site
 	elseif (isset($_SESSION['username']) AND isset($_SESSION['password']) AND isset($_SESSION['firstname']) AND isset($_SESSION['lastname']))
 	{
-		//page principal (liste des acteurs)
+		//condition de routage vers page des commentaires
 		if(isset($_GET['action']) AND $_GET['action'] == 'comments' AND isset($_GET['partner'])) 
 		{
 			listComments();
 		}
-		//page des commentaires
+		//condition de routage vers page 'ajouter un commentaire'
+		elseif (isset($_GET['action']) AND $_GET['action'] == 'addComment' AND isset($_GET['partner'])) 
+		{
+			addComment();
+		}
+		//condition de routage vers page d'acceuil (liste des acteurs)
 		else
 		{
 			listPartners();
@@ -44,7 +49,7 @@ try
 
 			header('Location: index.php');
 	}
-	//page de connexion
+	//routage vers page de connexion
 	else
 	{
 		connection();

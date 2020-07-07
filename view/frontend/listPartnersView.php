@@ -13,7 +13,7 @@
     	<section class="sections-partersPage" id="section-partner">
             <div>
         		<h2>Nos acteurs et partenaires</h2>
-        		<p>Retrouver toutes les informations sur nos acteurs et partenaires</p>
+        		<p>Retrouver toutes les informations sur nos acteurs et partenaires :</p>
         		<div id="listpartners-block">
 <?php
 while ($partners = $data->fetch()) 

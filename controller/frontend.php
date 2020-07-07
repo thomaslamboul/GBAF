@@ -2,6 +2,7 @@
 
 require('model/frontend.php');
 
+//Page d'inscription
 //Inscription en 3 étapes (1-demande nom/prénom/username | 2-demande question/réponse secrètes | 3-demande mdp)
 function registration()
 {	
@@ -128,9 +129,10 @@ function registration()
 	require('view/frontend/registrationView.php');
 }
 
-function checkLastname($lastname)
+//Vérifie si la chaine de caractère contient au moins 1 caractère et maximum 30 caractères
+function checkLastname($string)
 {
-	if (preg_match('#^[a-zéèàùç-]{1,30}$#i', $lastname))
+	if (preg_match('#^[a-zéèàùç-]{1,30}$#i', $string))
 	{
 		return true;
 	}
@@ -140,6 +142,7 @@ function checkLastname($lastname)
 	}	
 }
 
+//Vérifie si la chaine de caractère contient au moins 2 caractères et maximum 30 caractères
 function checkFirstname($firstname)
 {
 	if(preg_match('#^[a-zéèçàù-]{2,30}$#i', $firstname))
@@ -152,9 +155,10 @@ function checkFirstname($firstname)
 	}
 }
 
+//Vérifie si la chaine de caractère contient au moins 3 caractères et jusqu'à 25 caractères maximum
 function checkUsername($username)
 {
-	if (preg_match('#^[a-z0-9_-éèçàù]{3,25}$#i', $username))
+	if (preg_match('#^[-a-z0-9_éèçàù]{3,25}$#i', $username))
 	{
 		return true;
 	}
@@ -164,6 +168,7 @@ function checkUsername($username)
 	}
 }
 
+//Vérifie si la chaine de caractère contient au moins : 8 caractères, 1 caractère spécial, 1 majuscule, 1 chiffre
 function checkPassword($password)
 {
 	if (preg_match('#^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).{8,}$#', $password))
@@ -176,6 +181,7 @@ function checkPassword($password)
 	}	
 }
 
+//Vérifie si 2 chaines de caractères sont identiques
 function checkPasswordConfirm($password, $passwordConfirmation)
 {
 	if ($passwordConfirmation == $password)
@@ -188,6 +194,7 @@ function checkPasswordConfirm($password, $passwordConfirmation)
 	}
 }
 
+//Vérifie si la chaine de caractère contient au moins 1 caractère
 function checkQuestionAnswer($string)
 {
 	if (preg_match('#^[a-z0-9éèçàù@=+,.;:/!*%?$-_]+#i', $string))
@@ -200,6 +207,7 @@ function checkQuestionAnswer($string)
 	}
 }
 
+//Page de connexion
 function connection()
 {
 	if (isset($_POST['usernameConnection']) AND isset($_POST['passwordConnection']))
@@ -230,6 +238,7 @@ function connection()
 	require('view/frontend/connectionView.php');
 }
 
+//fonction de déconnexion
 function logout()
 {
 	$_SESSION = array();
@@ -245,7 +254,8 @@ function logout()
 	header('Location: index.php');
 }
 
-//Modification du mot de passe en 3 étapes (1-demande du username | 2-réponse à la question secrète | 3-nouveau mot de passe)
+//Page de modification du mot de passe
+//Modification en 3 étapes (1-demande du username | 2-réponse à la question secrète | 3-nouveau mot de passe)
 function forgotPassword()
 {
 	//Initialisation de la variable $step
@@ -308,6 +318,7 @@ function forgotPassword()
 	require('view/frontend/forgotPasswordView.php');
 }
 
+//Page d'accueil, liste des partenaires
 function listPartners()
 {
 
@@ -315,6 +326,7 @@ function listPartners()
 	require('view/frontend/listPartnersView.php');
 }
 
+//retourne la 1ère phrase d'une chaîne de cractères suivi de points de suspension
 function cutString($string/*, $length = 150*/) 
 {
 	$sentence = explode(".", $string);
@@ -328,7 +340,7 @@ function cutString($string/*, $length = 150*/)
  	return $sentence[0].'...';
 }
 
-//Page des commentaires
+//Page de la liste des commentaires des partenaires
 function listComments()
 {
 	$idPartner= htmlspecialchars($_GET['partner']);
@@ -392,6 +404,42 @@ function listComments()
 		$likeVotes = countLikeVotes($idPartner);
 		$dislikeVotes = countDislikeVotes($idPartner);
 
+		//On vérifie si l'utilisateur à déjà commenté
+		$alreadyCommented = checkAlreadyCommented($idPartner, $userInfos['id_user']);
+
 		require('view/frontend/listCommentsView.php');
 	}
+}
+
+//Page d'ajout de commentaire
+function addComment()
+{
+	$idPartner = htmlspecialchars($_GET['partner']);
+
+	$totalPartners = countPartners();
+
+	if (!ctype_digit($idPartner) AND $idPartner < $totalPartners OR $idPartner > $totalPartners OR $idPartner == 0) 
+	{
+		header('Location: index.php');
+	}
+	
+	$partner = getPartnerInfos($idPartner);
+
+	if (isset($_POST['newComment'])) 
+	{	
+		$userInfos = getUserInfos($_SESSION['username']);
+		$alreadyCommented = checkAlreadyCommented($idPartner, $userInfos['id_user']);
+
+		$newComment = htmlspecialchars($_POST['newComment']);
+		$checkCommentNotEmpty = checkQuestionAnswer($newComment);
+
+		if(!$alreadyCommented AND $checkCommentNotEmpty)
+		{
+			addCommentDB($userInfos['id_user'], $idPartner, $newComment);
+			$ancre='#comments_block';
+			header('Location: index.php?action=comments&partner='.$idPartner.$ancre);
+		}
+	}
+		
+	require('view/frontend/addCommentView.php');
 }
