@@ -11,9 +11,9 @@
                     <input type="text" name="usernameConnection" autofocus required>   
                     <label for="passwordConnection">Mot de passe</label>
                     <input type="password" name="passwordConnection" required>
-                    <div>
+                    <!--<div>
                         <input type="checkbox" name="autoConnect" value="ok"><label for="autoConnect">Connexion automatique</label>
-                    </div>
+                    </div>-->
                     <div>
                         <input type="submit" value="Se connecter">
                     </div>

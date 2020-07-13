@@ -158,7 +158,7 @@ function checkFirstname($firstname)
 //Vérifie si la chaine de caractère contient au moins 3 caractères et jusqu'à 25 caractères maximum
 function checkUsername($username)
 {
-	if (preg_match('#^[-a-z0-9_éèçàù]{3,25}$#i', $username))
+	if (preg_match('#^[-_a-z0-9éèçàù]{3,25}$#i', $username))
 	{
 		return true;
 	}
@@ -218,20 +218,19 @@ function connection()
 		$loginExist = checkLogins($username, $password);
 		if ($loginExist)
 		{
-			$_SESSION['username'] = $username;
-			$_SESSION['password'] = $password;
-			$data = getUserInfos($_SESSION['username']);
+			$data = getUserInfosByUsername($username);
+			$_SESSION['idUser'] = $data['id_user'];
 			$_SESSION['lastname'] = $data['last_name'];
 			$_SESSION['firstname'] = $data['first_name'];
 
-			//On vérifie si la case "connexion auto" optionnelle à été cochée et si oui on crée des cookies pour username et mdp
+			/*//On vérifie si la case "connexion auto" optionnelle à été cochée et si oui on crée des cookies pour username et mdp
 			if (isset($_POST['autoConnect']) AND !empty($_POST['autoConnect']))
 			{
 				setcookie('username', $username, time() + 14*24*3600, null, null, false, true);
 				setcookie('password', $password, time() + 14*24*3600, null, null, false, true);
 				setcookie('lastname', $data['last_name'], time() + 14*24*3600, null, null, false, true);
 				setcookie('firstname', $data['first_name'], time() + 14*24*3600, null, null, false, true);
-			}
+			}*/
 		header('Location: index.php');
 		}
 	}
@@ -243,10 +242,8 @@ function logout()
 {
 	$_SESSION = array();
 	session_destroy();
-	setcookie('username');
-	unset($_COOKIE['username']);
-	setcookie('password');
-	unset($_COOKIE['password']);
+	setcookie('idUser');
+	unset($_COOKIE['idUser']);
 	setcookie('firstname');
 	unset($_COOKIE['firstname']);
 	setcookie('lastname');
@@ -273,7 +270,7 @@ function forgotPassword()
 		$loginNotExist = checkPostUsername($usernameForgotPsw);
 		if (!$loginNotExist)
 		{
-			$data = getUserInfos($usernameForgotPsw);
+			$data = getUserInfosByUsername($usernameForgotPsw);
 			$userQuestion = $data['question'];
 			$step = 2;
 		}
@@ -356,7 +353,7 @@ function listComments()
 		$partner = getPartnerInfos($idPartner); //récupère les données des partenaires
 		$data = getComments($idPartner); //récupère les données des commentaires
 		$totalComments = countComments($idPartner); //compte le nombre total de commentaires
-		$userInfos = getUserInfos($_SESSION['username']); //récupère les données de l'utilisateur connecté
+		$userInfos = getUserInfosByID($_SESSION['idUser']); //récupère les données de l'utilisateur connecté
 
 		$req = checkAlreadyVoted($userInfos['id_user'], $idPartner); //vérifie si l'utilisateur connecté à déjà voté
 		$dataVote = $req->fetch();
@@ -427,7 +424,7 @@ function addComment()
 
 	if (isset($_POST['newComment'])) 
 	{	
-		$userInfos = getUserInfos($_SESSION['username']);
+		$userInfos = getUserInfosByID($_SESSION['idUser']);
 		$alreadyCommented = checkAlreadyCommented($idPartner, $userInfos['id_user']);
 
 		$newComment = htmlspecialchars($_POST['newComment']);
@@ -442,4 +439,117 @@ function addComment()
 	}
 		
 	require('view/frontend/addCommentView.php');
+}
+
+//Page paramètres du compte
+function accountSettings()
+{
+	$userInfos = getUserInfosByID($_SESSION['idUser']);
+
+	//Si le formulaire a été envoyé
+	if ($_SERVER['REQUEST_METHOD'] == 'POST') 
+	{
+		/*$checkLastname=false;
+		$checkFirstname=false;
+		$checkUsername=false;
+		$checkUsernameNotUsed=false;
+
+		$currentPswSend=false;*/
+
+		//Si le mot de passe actuel à bien été envoyé et que c'est le bon
+		if (isset($_POST['passwordCurrentSettings']) AND PasswordVerify($userInfos['id_user'], htmlspecialchars($_POST['passwordCurrentSettings'])))
+		{
+			//Vérification du nom
+			if (isset($_POST['lastnameSettings']) AND $_POST['lastnameSettings']!=$userInfos['last_name'] AND !empty($_POST['lastnameSettings']) AND $_POST['lastnameSettings']!='')
+			{
+				$lastnameSettings = htmlspecialchars($_POST['lastnameSettings']);
+
+				$checkLastname = checkLastname($lastnameSettings);
+
+				if($checkLastname)
+				{
+					updateUserLastname($userInfos['id_user'], $lastnameSettings);
+					$_SESSION['lastname'] = $lastnameSettings;
+				}
+			}
+
+			//Vérification du prénom
+			if (isset($_POST['firstnameSettings']) AND $_POST['firstnameSettings']!=$userInfos['first_name'] AND !empty($_POST['firstnameSettings']) AND $_POST['firstnameSettings']!='')
+			{
+				$firstnameSettings = htmlspecialchars($_POST['firstnameSettings']);
+
+				$checkFirstname = checkFirstname($firstnameSettings);
+
+				if($checkFirstname)
+				{
+					updateUserFirstname($userInfos['id_user'], $firstnameSettings);
+					$_SESSION['firstname'] = $firstnameSettings;
+				}
+			}
+
+			//Vérification du username
+			if (isset($_POST['usernameSettings']) AND $_POST['usernameSettings']!=$userInfos['username'] AND !empty($_POST['usernameSettings']) AND $_POST['usernameSettings']!='')
+			{
+				$usernameSettings = htmlspecialchars($_POST['usernameSettings']);
+
+				$checkUsername = checkUsername($usernameSettings);
+				$checkUsernameNotUsed = checkPostUsername($usernameSettings);
+
+				if($checkUsername AND $checkUsernameNotUsed)
+				{
+					updateUserUsername($userInfos['id_user'], $usernameSettings);
+				}
+			}
+
+			//Vérification du nouveau mot de passe et de sa confirmation
+			if (isset($_POST['newPasswordSettings']) AND !empty($_POST['newPasswordSettings']) OR isset($_POST['passwordConfirmationSettings']) AND $_POST['newPasswordSettings']!='')
+			{
+				$newPasswordSettings = htmlspecialchars($_POST['newPasswordSettings']);
+				$passwordConfirmationSettings = htmlspecialchars($_POST['passwordConfirmationSettings']);
+
+				$checkPassword = checkPassword($newPasswordSettings);
+				$checkPasswordConfirm = checkPasswordConfirm($newPasswordSettings, $passwordConfirmationSettings);
+
+				if ($checkPassword AND $checkPasswordConfirm) 
+				{
+					$newPasswordSettings = password_hash($newPasswordSettings, PASSWORD_DEFAULT);
+					updateUserPasswordByID($userInfos['id_user'], $newPasswordSettings);
+				}
+			}
+
+			//Vérification de la question
+			if (isset($_POST['questionSettings']) AND $_POST['questionSettings']!=$userInfos['question'] AND !empty($_POST['questionSettings']) AND $_POST['questionSettings']!='')
+			{
+				$questionSettings = htmlspecialchars($_POST['questionSettings']);
+
+				$checkQuestion = checkQuestionAnswer($questionSettings);
+
+				if($checkQuestion)
+				{
+					updateUserQuestion($userInfos['id_user'], $questionSettings);
+				}
+			}
+
+			//Vérification de la réponse
+			if (isset($_POST['answerSettings']) AND $_POST['answerSettings']!=$userInfos['answer'] AND !empty($_POST['answerSettings']) AND $_POST['answerSettings']!='')
+			{
+				$answerSettings = htmlspecialchars($_POST['answerSettings']);
+
+				$checkAnswer = checkQuestionAnswer($answerSettings);
+
+				if($checkAnswer)
+				{
+					updateUserAnswer($userInfos['id_user'], $answerSettings);
+				}
+			}
+		}
+		else
+		{
+			$currentPswSend=false;
+		}
+	}
+
+	$userInfos = getUserInfosByID($_SESSION['idUser']);
+
+	require('view/frontend/accountSettingsView.php');
 }

@@ -43,6 +43,26 @@ function checkLogins($username, $password)
 	return false;
 }
 
+//Vérification de la correspondance du mot de passe saisis avec celui de la BDD dans la table 'accounts'
+function PasswordVerify($idUser, $password)
+{
+	$db=dbConnect();
+
+	$req = $db -> prepare('SELECT password FROM accounts WHERE id_user=?');
+	$req->execute(array($idUser));
+	$data = $req->fetch();
+	$req->closecursor();
+
+	if (password_verify($password, $data['password']))
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
 //Vérification
 function checkPostUsername($username)
 {
@@ -79,12 +99,24 @@ function addAccount($lastname, $firstname, $username, $password, $question, $ans
             ));
 }
 
-function getUserInfos($username)
+function getUserInfosByUsername($username)
 {
 	$db=dbConnect();
 
 	$req = $db->prepare('SELECT * FROM accounts WHERE username=?');
 	$req->execute(array($username));
+	$data = $req->fetch();
+	$req->closecursor();
+
+	return $data;
+}
+
+function getUserInfosByID($idUser)
+{
+	$db=dbConnect();
+
+	$req = $db->prepare('SELECT * FROM accounts WHERE id_user=?');
+	$req->execute(array($idUser));
 	$data = $req->fetch();
 	$req->closecursor();
 
@@ -264,4 +296,76 @@ function addCommentDB($idUser, $idPartner, $comment)
 
     $req=$db->prepare('INSERT INTO posts(id_user, id_partner, date_add, post) VALUES(?, ?, NOW(), ?)');
     $req->execute(array($idUser, $idPartner, $comment));
+}
+
+//Mise à jour du nom dans la table accounts
+function updateUserLastname($idUser, $lastname)
+{
+	$db=dbConnect();
+
+    $req=$db->prepare('UPDATE accounts SET last_name= :newlastname WHERE id_user= :idUser');
+		$req->execute(array(
+            	'newlastname' => $lastname,
+            	'idUser' => $idUser
+            ));
+}
+
+//Mise à jour du prénom dans la table accounts
+function updateUserFirstname($idUser, $firstname)
+{
+	$db=dbConnect();
+
+    $req=$db->prepare('UPDATE accounts SET first_name= :newfirstname WHERE id_user= :idUser');
+		$req->execute(array(
+            	'newfirstname' => $firstname,
+            	'idUser' => $idUser
+            ));
+}
+
+//Mise à jour du username dans la table accounts
+function updateUserUsername($idUser, $username)
+{
+	$db=dbConnect();
+
+    $req=$db->prepare('UPDATE accounts SET username= :newUsername WHERE id_user= :idUser');
+		$req->execute(array(
+            	'newUsername' => $username,
+            	'idUser' => $idUser
+            ));
+}
+
+//Mise à jour du mot de passe dans la table accounts
+function updateUserPasswordByID($idUser, $password)
+{
+	$db=dbConnect();
+
+    $req=$db->prepare('UPDATE accounts SET password= :newPassword WHERE id_user= :idUser');
+		$req->execute(array(
+            	'newPassword' => $password,
+            	'idUser' => $idUser
+            ));
+}
+
+//Mise à jour de la question dans la table accounts
+function updateUserQuestion($idUser, $question)
+{
+	$db=dbConnect();
+
+    $req=$db->prepare('UPDATE accounts SET question= :newQuestion WHERE id_user= :idUser');
+		$req->execute(array(
+            	'newQuestion' => $question,
+            	'idUser' => $idUser
+            ));
+}
+
+//Mise à jour de la réponse dans la table accounts
+function updateUserAnswer($idUser, $answer)
+{
+	$db=dbConnect();
+
+    $req=$db->prepare('UPDATE accounts SET answer= :newAnswer WHERE id_user= :idUser');
+		$req->execute(array(
+            	'newAnswer' => $answer,
+            	'idUser' => $idUser
+            ));
 }

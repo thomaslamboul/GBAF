@@ -8,7 +8,7 @@
         <title><?= $title ?></title>
     </head>
     <body>
-    <div id="background" <?php if(!isset($_SESSION['username'])){?>class="background_forms"<?php }elseif(!isset($_GET['action']) AND isset($_SESSION['username'])){?>class="background_main_page"<?php }elseif(isset($_GET['action']) AND $_GET['action'] == 'comments' OR $_GET['action'] == 'addComment'){?>class="background_comments_page"<?php }?>>
+    <div id="background" <?php if(!isset($_SESSION['idUser'])){?>class="background_forms"<?php }elseif(!isset($_GET['action']) AND isset($_SESSION['idUser'])){?>class="background_main_page"<?php }elseif(isset($_GET['action']) AND $_GET['action'] == 'comments' OR $_GET['action'] == 'addComment' OR $_GET['action'] == 'settings'){?>class="background_comments_page"<?php }?>>
         <header>
             <nav>
                 <ul>
@@ -16,10 +16,10 @@
                     <li>
                         <ul id="userBlock">
                         <?php 
-                        if(isset($_SESSION['username']) AND isset($_SESSION['password']))
+                        if(isset($_SESSION['idUser']))
                         {
                         ?>
-                            <li><a href="" title="Paramètres de l'utilisateur"><img src="public/images/logo_profil.png" alt="Icon profil" class="logo" id="logo_profil"><?=$_SESSION['lastname'] .' '. $_SESSION['firstname']?></a></li>
+                            <li><a href="index.php?action=settings" title="Paramètres de l'utilisateur"><img src="public/images/logo_profil.png" alt="Icon profil" class="logo" id="logo_profil"><?=$_SESSION['lastname'] .' '. $_SESSION['firstname']?></a></li>
                             <li id="li_logout"><a href="index.php?action=logout" title="Déconnexion" class="navButton"><img src="public/images/logo_logout.png" alt="Icon logout" class="logo" id="logo_logout">Se déconnecter</a></li>
                         <?php 
                         }

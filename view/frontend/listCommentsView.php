@@ -18,7 +18,7 @@
 
             <div id="comments_block">
                 <div id="header_comments_block">
-                    <h3><?=htmlspecialchars($totalComments)?> commentaire<?php if(htmlspecialchars($totalComments) != 0){?>s<?php }?></h3>
+                    <h3><?=htmlspecialchars($totalComments)?> commentaire<?php if(htmlspecialchars($totalComments) > 1){?>s<?php }?></h3>
                     <div>
 <?php 
 if (!$alreadyCommented) 
