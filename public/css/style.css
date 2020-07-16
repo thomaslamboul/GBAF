@@ -515,18 +515,21 @@ PAGE COMMENTS AND ADDCOMMENT
 #block_partner_comments_page a
 {
 	margin-bottom: 30px;
+	width: 2vw;
 }
 #logo_partner_comments_page:nth-child(1)
 {
 	align-self: center;
+	text-align: center;
+	/*width: 150px;
+	height: 25vh;*/
 }
 #logo_partner_comments_page img
 {
-	margin-bottom: 80px;
-}
-#logo_partner_comments_page img
-{
+	margin-bottom: 50px;
 	border-radius: 10px;
+	height: 40vh;
+	width: 60vw;
 }
 #comments_block
 {
@@ -788,4 +791,186 @@ footer a
 	background-color: white;
 	margin-right: 15px;
 	margin-left: 15px;
+}
+
+/********************************************************************************************************
+*********************************************************************************************************
+MEDIA QUERIES (smartphone)
+*********************************************************************************************************
+********************************************************************************************************/
+@media only screen and (max-width: 767px)
+{
+	/****************************ALL********************************/
+	.back_button
+	{
+		margin: 15px 5px;
+	}
+	/****************************HEADER*****************************/
+	header
+	{
+		height: auto;
+		padding: 10px;
+		font-size: 0.9em;
+	}
+	header nav
+	{
+		text-align: center;
+		width: auto;
+	}
+	header ul
+	{
+		flex-direction: column;
+	}
+	#logoGBAF-block
+	{
+		height: 10vh;
+		margin-bottom: 10px;
+	}
+	#userBlock
+	{
+		justify-content: center;
+		align-items: center;
+	}
+	#userBlock li
+	{
+		margin: 3px;
+	}
+
+
+	/****************************PAGE PARTNERS*****************************/
+	#section-presentation div
+	{
+		margin-top:0;
+		width: 90vw;
+	}
+	#section-presentation div p
+	{
+		text-align: justify;
+		width: 80vw;
+		margin: auto;
+		font-size: 0.8em;
+	}
+	#section-presentation h1
+	{
+		font-size: 1.2em;
+	}
+	#master
+	{
+		height: 20vh;
+	}
+	#section-partner
+	{
+	
+
+	}
+	#section-partner div
+	{
+		width: 90%;
+	}
+	#section-partner h2
+	{
+		font-size: 1.2em;
+	}
+	#section-partner div p
+	{
+		width: 100%;
+		margin: auto;
+		font-size: 0.8em;
+	}
+	#listpartners-block
+	{
+		margin: auto;
+		margin-top: 40px;
+		padding: 10px;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	}
+	#partner_block
+	{
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		font-size: 0.9em;
+		margin: 10px 10px;
+		padding: 5px;
+		width: 50vw;
+	}
+	#partner_block > p
+	{
+		text-align: center;
+	}
+	#partner_block p img
+	{
+		height: 13vh;
+		width: 100vw;
+	}
+	#partner-content h3
+	{
+		margin: 10px auto;
+	}
+	#partner_block a[title="Lire la suite..."]
+	{
+		margin-top: 20px;
+	}
+
+
+	/****************************PAGE COMMENTS AND ADDCOMMENT*****************************/
+	#section_partner_comments_page
+	{
+		font-size: 0.8em;
+		width: 90vw;
+	}
+	#block_partner_comments_page > a
+	{
+		white-space: nowrap;
+		margin-bottom: 20px;
+		margin-top: -5px;
+	}
+	#logo_partner_comments_page
+	{
+		height: 13vh;
+		margin-bottom: 20px;
+	}
+	#comments_block
+	{
+		width: 90vw;
+	}
+	#header_comments_block
+	{
+		font-size: 0.9em;
+		margin:auto auto;
+		width: 85%;
+	}
+	#header_comments_block > div
+	{
+		display: flex;
+		flex-direction: column-reverse;
+		justify-content: center;
+		align-items: center;
+	}
+	#new_com_button
+	{
+		padding: 8px 11px;
+		margin-top: 10px;
+	}
+	#like_dislike_block
+	{
+		height: 15px;
+		width: 100%;
+	}
+	.comment
+	{
+		margin: 0 20px 10px 20px;
+	}
+	/****************************PAGE COMMENTS AND ADDCOMMENT*****************************/
+
+
+	/****************************FOOTER*****************************/
+	footer
+	{
+		font-size: 0.7em;
+	}
+
 }
