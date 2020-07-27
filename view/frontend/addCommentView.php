@@ -3,15 +3,16 @@
 
 <?php ob_start(); ?>
     	
+        <!-- Affichage du formulaire d'ajout d'un commentaire -->
         <section id="section_add_comment">
 
-            <a href="index.php?action=comments&partner=<?=htmlspecialchars($idPartner)?>" class="back_button"><img src="public/images/back_icon.png" alt="Back icon" class="logo"> Retour</a>
+            <a href="index.php?action=comments&partner=<?=htmlspecialchars($idPartner)?>" id="addcomment_back_button" class="back_button"><img src="public/images/back_icon.png" alt="Back icon" class="logo"> Retour</a>
 
             <div id="block_add_comment">
 
-                <p>
+                <h2>
                     <img src="data:image/png;base64,<?=htmlspecialchars(base64_encode($partner['logo']))?>" alt="Logo des acteurs et partenaires" title="<?=htmlspecialchars($partner['partner'])?>" class="logo"/>
-                </p>
+                </h2>
      
                 <form method="post" action="index.php?action=addComment&partner=<?=htmlspecialchars($idPartner)?>" id="form_add_comment">
                     <fieldset>
@@ -21,7 +22,7 @@
                         <div>
                             <label for="newComment"><?php if(isset($checkCommentNotEmpty) AND !$checkCommentNotEmpty){?><span class="error">Veuillez écrire un commentaire</span><?php }else{?>Commentaire:<?php }?></label>
 
-                            <textarea name="newComment" rows="5" cols="10" placeholder="Votre commentaire..." required></textarea>
+                            <textarea name="newComment" id="newComment" rows="5" cols="10" placeholder="Votre commentaire..." required></textarea>
                         </div>
                         
                         <input type="hidden" name="lastname" value="<?=$lastname?>">

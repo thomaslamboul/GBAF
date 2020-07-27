@@ -171,7 +171,7 @@ function checkUsername($username)
 //Vérifie si la chaine de caractère contient au moins : 8 caractères, 1 caractère spécial, 1 majuscule, 1 chiffre
 function checkPassword($password)
 {
-	if (preg_match('#^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).{8,}$#', $password))
+	if (preg_match('#^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[-_!:;,.\*\&\?\=\+\/@]).{8,}$#', $password))
 	{
 		return true;
 	}
@@ -455,6 +455,7 @@ function accountSettings()
 		$checkUsernameNotUsed=false;
 
 		$currentPswSend=false;*/
+		$success = false;
 
 		//Si le mot de passe actuel à bien été envoyé et que c'est le bon
 		if (isset($_POST['passwordCurrentSettings']) AND PasswordVerify($userInfos['id_user'], htmlspecialchars($_POST['passwordCurrentSettings'])))
@@ -542,6 +543,7 @@ function accountSettings()
 					updateUserAnswer($userInfos['id_user'], $answerSettings);
 				}
 			}
+			$success = true;
 		}
 		else
 		{

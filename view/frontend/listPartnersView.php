@@ -2,6 +2,7 @@
 <?php $title = 'GBAF | Acceuil'; ?>
 
 <?php ob_start(); ?>
+        <!-- Affichage description GBAF -->
     	<section class="sections-partersPage" id="section-presentation">
             <div>
         		<h1>Le Groupement Banque Assurance Français​</h1>
@@ -10,6 +11,7 @@
             <div id="master"></div>	
     	</section>
 
+        <!-- Affichage des acteurs et partenaires -->
     	<section class="sections-partersPage" id="section-partner">
             <div>
         		<h2>Nos acteurs et partenaires</h2>
@@ -19,11 +21,11 @@
 while ($partners = $data->fetch()) 
 {
 ?>
-                    <div id="partner_block">
+                    <div class="partner_block">
                         <p>
                             <img src="data:image/png;base64,<?=htmlspecialchars(base64_encode($partners['logo']))?>" alt="Logo des acteurs et partenaires" title="<?=htmlspecialchars($partners['partner'])?>" class="logo"/>
                         </p>
-                        <div id="partner-content">
+                        <div class="partner-content">
             				<h3><?=htmlspecialchars($partners['partner'])?></h3>
             				<p><?=cutString(nl2br(htmlspecialchars($partners['description'])))?></p>
                             <a href="#" title="<?=htmlspecialchars($partners['partner'])?>"><?=htmlspecialchars($partners['partner'])?></a>

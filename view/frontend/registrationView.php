@@ -2,25 +2,27 @@
 <?php $title = 'GBAF | Inscription'; ?>
 
 <?php ob_start(); ?>
+        <!-- Affichage formulaire d'inscription -->
     	<section class="section_forms">
             <a href="index.php" class="back_button"><img src="public/images/back_icon.png" alt="Back icon" class="logo"> Retour</a>
             <form method="post" action="index.php?action=registration">
                 <fieldset>
 
-                    <legend><strong>Inscription - Étape <?=$step?></strong></legend>                    
+                    <legend><h2>Inscription - Étape <?=$step?></h2></legend>                    
 <?php   
 if($step == 1)
 {
 ?>
+                    <!-- Affichage formulaire d'inscription - Etape 1 (nom, prénom et nom d'utilisateur)-->
                     <div class="blocFormsFormat">
                         <div class="formsFormat">
                             <label for="lastnameRegistration"><?php if(isset($lastnameCheck) AND !$lastnameCheck){?><span class="error">Format de nom incorrect</span><?php }else{?>Nom<?php }?></label>
-                            <input type="text" name="lastnameRegistration" placeholder="Ex: John" value="<?php if(isset($lastnameCheck) AND $lastnameCheck){echo "$lastname";}?>" autofocus required>
+                            <input type="text" name="lastnameRegistration" placeholder="Ex: Smith" value="<?php if(isset($lastnameCheck) AND $lastnameCheck){echo "$lastname";}?>" id="lastnameRegistration" autofocus required>
                         </div>
 
                         <div class="formsFormat">  
                             <label for="firstnameRegistration"><?php if(isset($firstnameCheck) AND !$firstnameCheck){?><span class="error">Format de prénom incorrect</span><?php }else{?>Prénom<?php }?></label>
-                            <input type="text" name="firstnameRegistration" placeholder="Ex: Smith" value="<?php if(isset($firstnameCheck) AND $firstnameCheck){echo "$firstname";}?>" required>
+                            <input type="text" name="firstnameRegistration" placeholder="Ex: John" value="<?php if(isset($firstnameCheck) AND $firstnameCheck){echo "$firstname";}?>" id="firstnameRegistration" required>
                         </div>
                     </div>
 
@@ -35,12 +37,13 @@ if($step == 1)
                             </ul>
                         </a>
                     </div>
-                    <input type="text" name="usernameRegistration" placeholder="Ex: JohnS-58" value="<?php if(isset($usernameCheck) AND $usernameCheck){echo "$username";}?>" required>
+                    <input type="text" name="usernameRegistration" placeholder="Ex: JohnS-58" value="<?php if(isset($usernameCheck) AND $usernameCheck){echo "$username";}?>" id="usernameRegistration" required>
 <?php
 }
 if($step == 2)
 {
 ?>
+                    <!-- Affichage formulaire d'inscription - Etape 2 (question et réponse)-->
                     <div class="blocWithTooltip">
                         <label for="questionRegistration"><?php if(isset($questionCheck) AND !$questionCheck){?><span class="error">Veuillez saisir une question secrète</span><?php }else{?>Question secrète<?php }?></label>
                         <a class="toolTip">
@@ -52,7 +55,7 @@ if($step == 2)
                             </ul>
                         </a>
                     </div>
-                        <input type="text" name="questionRegistration" placeholder="Ex: Quel est le nom et prénom de mon premier amour ? / Quel est le nom de famille de mon professeur d’enfance préféré ? / Quel est mon jeu vidéo favori ?" value="<?php if(isset($questionCheck) AND $questionCheck){echo "$question";}?>" required>
+                        <input type="text" name="questionRegistration" placeholder="Ex: Quel est le nom et prénom de mon premier amour ? / Quel est le nom de famille de mon professeur d’enfance préféré ? / Quel est mon jeu vidéo favori ?" value="<?php if(isset($questionCheck) AND $questionCheck){echo "$question";}?>" id="questionRegistration" required>
 
                     <div class="blocWithTooltip">
                         <label for="answerRegistration"><?php if(isset($answerCheck) AND !$answerCheck){?><span class="error">Veuillez saisir une réponse secrète</span><?php }else{?>Réponse à votre question secrète<?php }?></label>
@@ -64,7 +67,7 @@ if($step == 2)
                             </ul>
                         </a>
                     </div>
-                    <input type="text" name="answerRegistration" placeholder="Ex: Martin5 Sylvain6 / Durand!5! / Civilization !6!" value="<?php if(isset($answerCheck) AND $answerCheck){echo "$answer";}?>" required>
+                    <input type="text" name="answerRegistration" placeholder="Ex: Martin5 Sylvain6 / Durand!5! / Civilization !6!" value="<?php if(isset($answerCheck) AND $answerCheck){echo "$answer";}?>" id="answerRegistration" required>
                     <input type="hidden" name="lastname" value="<?=$lastname?>">
                     <input type="hidden" name="firstname" value="<?=$firstname?>">
                     <input type="hidden" name="username" value="<?=$username?>">
@@ -73,8 +76,9 @@ if($step == 2)
 if($step == 3)
 {
 ?>
-                    <div class="blocFormsFormat">
-                        <div class="formsFormat">
+                    <!-- Affichage formulaire d'inscription - Etape 3 (mot de passe et confirmation du mot de passe)-->
+                    <div class="blocFormsFormat column_forms">
+                        <div class="formsFormat width_forms">
                             <div class="blocWithTooltip">
                                 <label for="passwordRegistration"><?php if(isset($passwordCheck) AND !$passwordCheck){?><span class="error">Format de mot de passe incorrect</span><?php }else{?>Mot de passe<?php }?></label>
                                 <a class="toolTip">
@@ -87,12 +91,12 @@ if($step == 3)
                                 </ul>
                                 </a>
                             </div>
-                            <input type="password" name="passwordRegistration" required>
+                            <input type="password" name="passwordRegistration" id="passwordRegistration" required>
                         </div>
 
-                        <div class="formsFormat">
+                        <div class="formsFormat width_forms">
                             <label for="passwordConfirmationRegistration"><?php if(isset($passwordConfirmationCheck) AND !$passwordConfirmationCheck AND $passwordCheck){?><span class="error">Les mots de passe ne correspondent pas</span><?php }else{?>Confirmation du mot de passe<?php }?></label>
-                            <input type="password" name="passwordConfirmationRegistration" required>
+                            <input type="password" name="passwordConfirmationRegistration" id="passwordConfirmationRegistration" required>
                         </div>
                     </div>
                     <input type="hidden" name="lastname" value="<?=$lastname?>">

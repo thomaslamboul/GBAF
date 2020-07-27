@@ -9,6 +9,7 @@
     </head>
     <body>
     <div id="background" <?php if(!isset($_SESSION['idUser'])){?>class="background_forms"<?php }elseif(!isset($_GET['action']) AND isset($_SESSION['idUser'])){?>class="background_main_page"<?php }elseif(isset($_GET['action']) AND $_GET['action'] == 'comments' OR $_GET['action'] == 'addComment' OR $_GET['action'] == 'settings'){?>class="background_comments_page"<?php }?>>
+        <!-- Affichage de l'en-tête-->
         <header>
             <nav>
                 <ul>
@@ -42,6 +43,7 @@
             </nav>
         </header>
         <?= $content ?>
+        <!-- Affichage du pied de page-->
         <footer>
             <nav>
                 <ul>

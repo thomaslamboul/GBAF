@@ -2,7 +2,8 @@
 <?php $title = 'GBAF | '.$partner['partner'].''; ?>
 
 <?php ob_start(); ?>
-    	
+
+    	<!-- Affichage des informations de l'acteur -->
         <section id="section_partner_comments_page">
 
             <a href="index.php#partner_block" class="back_button"><img src="public/images/back_icon.png" alt="Back icon" class="logo"> Retour</a>
@@ -16,10 +17,12 @@
                 <p><?=nl2br(htmlspecialchars($partner['description']))?></p>
             </div>
 
+            <!-- Affichage des commentaires de l'acteur -->
             <div id="comments_block">
+                <!-- En-tête du bloc des commentaires contenant : nombre commentaire + bouton nouveau com + boutons like/dislike -->
                 <div id="header_comments_block">
                     <h3><?=htmlspecialchars($totalComments)?> commentaire<?php if(htmlspecialchars($totalComments) > 1){?>s<?php }?></h3>
-                    <div>
+                    <div id="new_com_button_like_dislike_block">
 <?php 
 if (!$alreadyCommented) 
 {
@@ -45,6 +48,7 @@ if ($comments = $data->fetch())
     do
     {
 ?>
+                <!-- Affichage dynamique des commentaires -->
                 <div class="comment">
                     <p><strong><?=htmlspecialchars($comments['first_name'])?></strong></p>
                     <p class="date_comments"><?=htmlspecialchars($comments['formated_date'])?></p>

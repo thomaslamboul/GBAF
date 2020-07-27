@@ -1,6 +1,6 @@
 <?php
 
-//Connexion à la BDD
+//Connexion à la BDD en local
 function dbConnect()
 {
     $db = new PDO('mysql:host=localhost;dbname=GBAF;charset=utf8', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
