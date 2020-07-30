@@ -8,7 +8,7 @@ function dbConnect()
     return $db;
 }
 
-//Vérification de la correspondance du username et du mot de passe saisis avec ceux de la BDD dans la table 'accounts'
+//Vérification de la correspondance du username et du mot de passe saisis avec ceux de la BDD dans la table 'accounts', retourne true/false
 function checkLogins($username, $password)
 {
 	$db=dbConnect();
@@ -43,7 +43,7 @@ function checkLogins($username, $password)
 	return false;
 }
 
-//Vérification de la correspondance du mot de passe saisis avec celui de la BDD dans la table 'accounts'
+//Vérification de la correspondance du mot de passe saisis avec celui de la BDD dans la table 'accounts', retourne true/false
 function PasswordVerify($idUser, $password)
 {
 	$db=dbConnect();
@@ -63,7 +63,7 @@ function PasswordVerify($idUser, $password)
 	}
 }
 
-//Vérification
+//Vérification de la correspondance du username avec ceux de la BDD, retourne true/false
 function checkPostUsername($username)
 {
 	$db=dbConnect();
@@ -84,6 +84,7 @@ function checkPostUsername($username)
 	return true;
 }
 
+//Ajout d'un nouveau membre dans la table "accounts"
 function addAccount($lastname, $firstname, $username, $password, $question, $answer)
 {
 	$db=dbConnect();
@@ -99,6 +100,7 @@ function addAccount($lastname, $firstname, $username, $password, $question, $ans
             ));
 }
 
+//Récupère les infos d'un membre avec son username, retourne les données du membre
 function getUserInfosByUsername($username)
 {
 	$db=dbConnect();
@@ -111,6 +113,7 @@ function getUserInfosByUsername($username)
 	return $data;
 }
 
+//Récupère les infos d'un membre avec son id, retourne les données du membre
 function getUserInfosByID($idUser)
 {
 	$db=dbConnect();
@@ -123,6 +126,7 @@ function getUserInfosByID($idUser)
 	return $data;
 }
 
+//Vérification de la réponse secrète d'un membre dont le username est donné en paramètre, retourne true/false
 function checkUserAnswer($answer, $username)
 {
 	$db=dbConnect();
@@ -144,6 +148,7 @@ function checkUserAnswer($answer, $username)
 	return $answer;
 }
 
+//Met à jour le mot de passe dans la BDD
 function updateUserPassword($username, $password)
 {
 	$db=dbConnect();
@@ -155,6 +160,7 @@ function updateUserPassword($username, $password)
             ));
 }
 
+//Récupère les informations de tous les partenaires, retourne toute la table
 function getPartners()
 {
 	$db=dbConnect();
@@ -164,6 +170,7 @@ function getPartners()
 	return $req;
 }
 
+//Récupère les informations d'un partenaire grâce à son id, retourne les données du partenaire
 function getPartnerInfos($idPartner)
 {
 	$db=dbConnect();
@@ -176,6 +183,7 @@ function getPartnerInfos($idPartner)
 	return $data;
 }
 
+//Compte le nombre de partenaire total dans la BDD, retourne ce nombre
 function countPartners()
 {
 	$db=dbConnect();
@@ -187,6 +195,7 @@ function countPartners()
 	return $data['total_partners'];
 }
 
+//Récupère tous les commentaires d'un partenaire dont l'id est donné en paramètre, retourne le résultat de la requête
 function getComments($idPartner)
 {
 	$db=dbConnect();
@@ -197,6 +206,7 @@ function getComments($idPartner)
 	return $req;
 }
 
+//Compte le nombre total de commentaire d'un partenaire dont l'id est donné en paramètre, retourne ce nombre
 function countComments($idPartner)
 {
 	$db=dbConnect();
@@ -209,6 +219,7 @@ function countComments($idPartner)
 	return $data['total_comments'];
 }
 
+//Compte le nombre total de vote "j'aime" d'un partenaire dont l'id est donné en paramètre, retourne ce nombre
 function countLikeVotes($idPartner)
 {
 	$db=dbConnect();
@@ -221,6 +232,7 @@ function countLikeVotes($idPartner)
 	return $data['total_votes'];
 }
 
+//Compte le nombre total de vote "je n'aime pas" d'un partenaire dont l'id est donné en paramètre, retourne ce nombre
 function countDislikeVotes($idPartner)
 {
 	$db=dbConnect();
@@ -233,6 +245,7 @@ function countDislikeVotes($idPartner)
 	return $data['total_votes'];
 }
 
+//Récupère le vote et le nombre total de fois voté d'un utilsateur concernant un partenaire, retourne le résultat de la requête
 function checkAlreadyVoted($idUser, $idPartner)
 {
 	$db=dbConnect();
@@ -243,6 +256,7 @@ function checkAlreadyVoted($idUser, $idPartner)
 	return $req;
 }
 
+//Ajoute le vote d'un utilisateur (via son id) pour un partenaire (via son id)
 function addVote($idUser, $idPartner, $voteValue)
 {
 	$db=dbConnect();
@@ -255,6 +269,7 @@ function addVote($idUser, $idPartner, $voteValue)
             ));
 }
 
+//Met à jour le vote d'un utilisateur (via son id) pour un partenaire (via son id)
 function updateVote($idUser, $idPartner, $voteValue)
 {
 	$db=dbConnect();
@@ -267,6 +282,7 @@ function updateVote($idUser, $idPartner, $voteValue)
         ));
 }
 
+//Vérifie si un utilisateur à déjà écrit un commentaire pour un partenaire, retourne true/false
 function checkAlreadyCommented($idPartner, $idUser)
 {
 	$db=dbConnect();
