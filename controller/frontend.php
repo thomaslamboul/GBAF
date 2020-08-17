@@ -308,7 +308,7 @@ function forgotPassword()
 			$newPassword = password_hash($newPassword, PASSWORD_DEFAULT);
 			updateUserPassword($username, $newPassword);
 			$updatePswStatus = true;
-			header('Location: index.php?updatePswStatus='.$updatePswStatus);
+			header('Location: index.php?success='.$updatePswStatus);
 		}
 	}
 	//Affichage
